@@ -80,7 +80,7 @@
     </com.google.android.material.textfield.TextInputLayout>
     <!--Button entrar-->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnreenviar"
+        android:id="@+id/btnlogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txtpasswordEn"
@@ -98,7 +98,7 @@
         android:id="@+id/txtopcion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnreenviar"
+        android:layout_below="@+id/btnlogin"
         android:gravity="center"
         android:text="¿crear usuario ó restablecer Contraseña?"
         android:textColor="@color/black"

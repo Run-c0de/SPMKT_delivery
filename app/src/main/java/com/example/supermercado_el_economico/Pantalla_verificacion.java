@@ -19,7 +19,7 @@ public class Pantalla_verificacion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_verificacion);
         txtcodigo =(TextInputEditText) findViewById(R.id.txtcodigo);
-        btnreenviar =(MaterialButton) findViewById(R.id.btnreenviar);
+        btnreenviar =(MaterialButton) findViewById(R.id.btnlogin);
         btnverificarcodigo =(MaterialButton) findViewById(R.id.btnverificarcodigo);
 
         btnverificarcodigo.setOnClickListener(new View.OnClickListener() {

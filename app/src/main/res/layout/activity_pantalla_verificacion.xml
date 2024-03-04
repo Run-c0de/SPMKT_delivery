@@ -86,7 +86,7 @@
             android:textStyle="normal" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnreenviar"
+            android:id="@+id/btnlogin"
             android:layout_width="143dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
