@@ -9,10 +9,9 @@
 
     <ImageView
         android:id="@+id/logoeco"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="100dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_width="401dp"
+        android:layout_height="301dp"
+        app:srcCompat="@drawable/logo_oficial" />
 
 
     <TextView
@@ -70,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btnRenvio"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="133dp"
         android:layout_marginBottom="10dp"
         android:backgroundTint="#F17A0A"
