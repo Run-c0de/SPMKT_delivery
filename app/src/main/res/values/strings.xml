@@ -2,4 +2,9 @@
     <string name="app_name">Supermercado_el_Economico</string>
     <string name="Correo">Ingrese su Correo Electronico</string>
     <string name="Contraseña">Ingrese su Contraseña</string>
+    <string name="textViewProductName">Nombre Producto</string>
+    <string name="textViewPriceReal">Precio Real\n</string>
+    <string name="textViewPriceDiscount">Precio Con Descuento</string>
+    <string name="buttonAddToCart">Add to Cart</string>
+    <string name="nombre">Nombre</string>
 </resources>

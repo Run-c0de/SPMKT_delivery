@@ -46,13 +46,8 @@
             android:exported="false" />
         <activity
             android:name=".Pantalla_Inicio"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="true"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".Pantalla_Nueva_Password"
             android:exported="false" />
@@ -65,6 +60,49 @@
         <activity
             android:name=".Pantalla_verificacion"
             android:exported="false" />
+
+        <activity
+            android:name=".PerfilRepartidor"
+            android:exported="true" />
+        <activity
+            android:name=".ActualizarPerfil"
+            android:exported="true" />
+        <activity
+            android:name=".Pantalla_Panaderia"
+            android:exported="true" />
+        <activity
+            android:name=".Pantalla_Frutas_Verduras"
+            android:exported="true" />
+        <activity
+            android:name=".Pantalla_Carnes_res_Aves"
+            android:exported="true" />
+        <activity
+            android:name=".Pantalla_Bebidas"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Pantalla_Lacteos"
+            android:exported="true" />
+
+        <activity
+            android:name=".DetallePedidoActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".HistorialPedidoActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".CarritoActivity"
+            android:exported="true"/>
+
     </application>
 
 </manifest>
