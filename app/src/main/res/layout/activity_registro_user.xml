@@ -69,6 +69,7 @@
         android:textColorHint="@android:color/darker_gray"
         app:startIconDrawable="@drawable/person_ico"
         android:drawablePadding="10dp"
+        
         android:hint="Ingrese su Nombre"
         app:boxBackgroundMode="outline">
 
