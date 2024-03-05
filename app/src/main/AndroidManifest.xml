@@ -92,7 +92,16 @@
             android:exported="true" />
         <activity
             android:name=".Pantalla_Bebidas"
-            android:exported="true"></activity>
+            android:exported="true"/>
+        <activity
+            android:name=".Home"
+            android:exported="true"/>
+        <activity
+            android:name=".Delivery.HomeRepartidor"
+            android:exported="true"/>
+        <activity
+            android:name=".MasVendidos"
+            android:exported="true"/>
         <activity
             android:name=".Pantalla_Lacteos"
             android:exported="true" />
