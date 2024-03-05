@@ -1,4 +1,4 @@
-package com.example.supermercado_el_economico;
+package com.example.supermercado_el_economico.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.supermercado_el_economico.R;
 import com.example.supermercado_el_economico.models.Producto;
 
 import java.util.List;

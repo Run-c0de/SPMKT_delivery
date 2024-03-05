@@ -5,6 +5,7 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -39,6 +40,21 @@
         android:theme="@style/Theme.Supermercado_el_Economico"
         tools:targetApi="31">
         <activity
+            android:name=".Delivery.PedidosView"
+            android:exported="false" />
+        <activity
+            android:name=".Shop.MapView"
+            android:exported="false" />
+        <activity
+            android:name=".Shop.CustomerAddress"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".registro_user"
             android:exported="false" />
         <activity
@@ -46,8 +62,7 @@
             android:exported="false" />
         <activity
             android:name=".Pantalla_Inicio"
-            android:exported="true"/>
-
+            android:exported="true" />
         <activity
             android:name=".Pantalla_Nueva_Password"
             android:exported="false" />
@@ -60,9 +75,8 @@
         <activity
             android:name=".Pantalla_verificacion"
             android:exported="false" />
-
         <activity
-            android:name=".PerfilRepartidor"
+            android:name=".Delivery.PerfilRepartidor"
             android:exported="true" />
         <activity
             android:name=".ActualizarPerfil"
@@ -78,31 +92,23 @@
             android:exported="true" />
         <activity
             android:name=".Pantalla_Bebidas"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".Pantalla_Lacteos"
             android:exported="true" />
-
         <activity
             android:name=".DetallePedidoActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".HistorialPedidoActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".CarritoActivity"
-            android:exported="true"/>
+            android:exported="true" />
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBqa" />
     </application>
 
 </manifest>
