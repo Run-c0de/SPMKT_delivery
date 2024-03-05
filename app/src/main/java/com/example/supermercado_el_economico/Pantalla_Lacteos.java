@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.supermercado_el_economico.Adapters.ProductosAdapter;
 import com.example.supermercado_el_economico.models.Producto;
 
 import java.util.ArrayList;

@@ -4,14 +4,18 @@
     <item
         android:id="@+id/page_1"
         android:enabled="true"
-        android:title="HOME"
-        />
+        android:icon="@drawable/home"
+        android:title="" />
+
     <item
         android:id="@+id/page_2"
         android:enabled="true"
-        android:title="PEDIDOS"/>
+        android:icon="@drawable/ic_order"
+        android:title="" />
+
     <item
         android:id="@+id/page_3"
         android:enabled="true"
-        android:title="DIRECCION"/>
+        android:icon="@drawable/ic_location"
+        android:title="" />
 </menu>
