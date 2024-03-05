@@ -38,6 +38,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Supermercado_el_Economico"
         tools:targetApi="31">
+
+        <!-- MainActivity como actividad principal -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false">
+
+        </activity>
+
+        <!-- Otras actividades -->
         <activity
             android:name=".registro_user"
             android:exported="false" />
@@ -46,7 +55,12 @@
             android:exported="false" />
         <activity
             android:name=".Pantalla_Inicio"
-            android:exported="true"/>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".Pantalla_Nueva_Password"
@@ -55,54 +69,57 @@
             android:name=".Restablecer_contra"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".Pantalla_verificacion"
             android:exported="false" />
-
         <activity
             android:name=".PerfilRepartidor"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".ActualizarPerfil"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".Pantalla_Panaderia"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".Pantalla_Frutas_Verduras"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".Pantalla_Carnes_res_Aves"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".Pantalla_Bebidas"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="false">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Pantalla_Lacteos"
-            android:exported="true" />
+            android:exported="false" />
 
         <activity
             android:name=".DetallePedidoActivity"
-            android:exported="true">
+            android:exported="false">
 
         </activity>
         <activity
             android:name=".HistorialPedidoActivity"
-            android:exported="true">
+            android:exported="false">
 
         </activity>
         <activity
             android:name=".CarritoActivity"
-            android:exported="true"/>
+            android:exported="false"/>
 
+        <!--  actividades faltantes-->
+        <activity
+            android:name=".Home"
+            android:exported="false"/>
+
+        <activity
+            android:name=".HomeRepartidor"
+            android:exported="false"/>
+        <activity
+            android:name=".MasVendidos"
+            android:exported="false"/>
     </application>
 
 </manifest>
