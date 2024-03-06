@@ -105,7 +105,7 @@
         android:textSize="16sp" />
     <!--layout para los dos botones -->
     <LinearLayout
-        android:layout_width="375dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtopcion"
         android:layout_alignParentBottom="true"
@@ -113,26 +113,24 @@
         android:layout_marginTop="26dp"
         android:layout_marginBottom="4dp"
         android:gravity="center">
-        <!--boton registrar cuenta -->
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCrear"
-            android:layout_width="173dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
             android:backgroundTint="#F17A0A"
             android:onClick="RegistroData"
-            android:text="CREAR USUARIO "
+            android:text="CREAR USUARIO"
             android:textColor="@color/black" />
-        <!--boton restablecer cuenta -->
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnrestablecer"
-            android:layout_width="170dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
+            android:layout_weight="1"
             android:backgroundTint="#F17A0A"
             android:text="Restablecer"
             android:textColor="@color/black" />

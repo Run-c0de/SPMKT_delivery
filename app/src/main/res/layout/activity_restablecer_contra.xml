@@ -42,16 +42,16 @@
         android:layout_width="295dp"
         android:layout_height="52dp"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="615dp"
+        android:layout_marginTop="652dp"
         android:layout_marginEnd="48dp"
         android:backgroundTint="?android:attr/colorActivatedHighlight"
         android:text="Enviar Tocket"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/textView7"
