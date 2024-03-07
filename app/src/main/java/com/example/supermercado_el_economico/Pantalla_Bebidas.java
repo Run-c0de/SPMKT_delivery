@@ -1,7 +1,10 @@
 package com.example.supermercado_el_economico;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,12 +21,17 @@ public class Pantalla_Bebidas extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ProductosAdapter productosAdapter;
 
+    Button btnatras;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_bebidas);
+
+
+        Button btnatras = findViewById(R.id.btnatras);
 
         List<Producto> listaProductos = new ArrayList<>();
         listaProductos.add(new Producto("Bebida Energizante Raptor Zero Sin Azúcar Lata 473 Ml", "L 24.90", "L 19.92", R.drawable.producto1));
@@ -38,6 +46,14 @@ public class Pantalla_Bebidas extends AppCompatActivity {
         // Inicializar y configurar el adaptador
         productosAdapter = new ProductosAdapter(listaProductos);
         recyclerView.setAdapter(productosAdapter);
+
+        btnatras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Pantalla_Bebidas.this, Home.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

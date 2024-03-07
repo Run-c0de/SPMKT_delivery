@@ -71,9 +71,7 @@
         <activity
             android:name=".Pantalla_verificacion"
             android:exported="false" />
-        <activity
-            android:name="com.example.supermercado_el_economico.Delivery.PerfilRepartidor"
-            android:exported="false" />
+
         <activity
             android:name=".ActualizarPerfil"
             android:exported="false" />
@@ -114,12 +112,18 @@
             android:name=".Home"
             android:exported="true"/>
 
-        <activity
-            android:name="com.example.supermercado_el_economico.Delivery.HomeRepartidor"
-            android:exported="false"/>
+
         <activity
             android:name=".MasVendidos"
             android:exported="false"/>
+
+        <activity
+            android:name="com.example.supermercado_el_economico.Delivery.HomeRepartidor"
+            android:exported="false"/>
+
+        <activity
+            android:name="com.example.supermercado_el_economico.Delivery.PerfilRepartidor"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -14,12 +14,12 @@ public class MasVendidos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mas_vendidos);
 
-        Button btnHome = findViewById(R.id.btn_home);
+        Button btnatras = findViewById(R.id.btnatras);
 
-        btnHome.setOnClickListener(new View.OnClickListener() {
+
+        btnatras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Abre la actividad Lacteos
                 Intent intent = new Intent(MasVendidos.this, Home.class);
                 startActivity(intent);
             }
