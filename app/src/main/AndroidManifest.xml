@@ -112,7 +112,7 @@
         <!--  actividades faltantes-->
         <activity
             android:name=".Home"
-            android:exported="false"/>
+            android:exported="true"/>
 
         <activity
             android:name="com.example.supermercado_el_economico.Delivery.HomeRepartidor"
