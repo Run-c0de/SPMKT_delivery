@@ -1,7 +1,10 @@
 package com.example.supermercado_el_economico;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +26,8 @@ public class Pantalla_Frutas_Verduras extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_frutas_verduras);
 
+        Button btnatras = findViewById(R.id.btnatras);
+
         // Crear una lista de productos de ejemplo
         List<Producto> listaProductos = new ArrayList<>();
         listaProductos.add(new Producto("Fresa La Carreta Bandeja 1Lb", "L 100.90", "L 0.00", R.drawable.fresas));
@@ -37,5 +42,13 @@ public class Pantalla_Frutas_Verduras extends AppCompatActivity {
         // Inicializar y configurar el adaptador
         productosAdapter = new ProductosAdapter(listaProductos);
         recyclerView.setAdapter(productosAdapter);
+
+        btnatras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Pantalla_Frutas_Verduras.this, Home.class);
+                startActivity(intent);
+            }
+        });
     }
 }

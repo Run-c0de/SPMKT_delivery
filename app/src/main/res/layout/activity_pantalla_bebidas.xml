@@ -1,10 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <!-- Barra de aplicaciones -->
+
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar"
         android:layout_width="match_parent"
@@ -12,6 +14,22 @@
         android:background="?android:attr/colorActivatedHighlight"
         app:menu="@menu/menu_carrito"
         app:title="Bebidas" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="39dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnatras"
+            android:layout_width="126dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="@string/btnatras"
+            android:textColor="#000000"
+            tools:ignore="TouchTargetSizeCheck" />
+    </LinearLayout>
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
@@ -27,19 +45,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"
         android:layout_width="match_parent"
-        android:layout_height="595dp" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="?android:attr/colorActivatedHighlight"
-        android:paddingBottom="5dp"
-        app:itemTextAppearanceActive="?android:attr/textAppearanceMedium"
-        app:itemTextAppearanceInactive="?android:attr/textAppearanceMedium"
-        app:itemTextColor="#0A0000"
-        app:menu="@menu/bottom_navigation_menu" />
+        android:layout_height="576dp" />
 
 
 </LinearLayout>

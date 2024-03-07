@@ -1,7 +1,10 @@
 package com.example.supermercado_el_economico;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +26,8 @@ public class Pantalla_Carnes_res_Aves extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_carnes_res_aves);
 
+        Button btnatras = findViewById(R.id.btnatras);
+
         // Crear una lista de productos de ejemplo
         List<Producto> listaProductos = new ArrayList<>();
         listaProductos.add(new Producto("Pollo Entero Sin Menudo Congelado Pollo Rey x Unidad", "L 136.40", "L 122.76", R.drawable.polloe));
@@ -37,5 +42,13 @@ public class Pantalla_Carnes_res_Aves extends AppCompatActivity {
         // Inicializar y configurar el adaptador
         productosAdapter = new ProductosAdapter(listaProductos);
         recyclerView.setAdapter(productosAdapter);
+
+        btnatras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Pantalla_Carnes_res_Aves.this, Home.class);
+                startActivity(intent);
+            }
+        });
     }
 }

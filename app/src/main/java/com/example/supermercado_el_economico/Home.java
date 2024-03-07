@@ -2,12 +2,17 @@ package com.example.supermercado_el_economico;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Home extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,4 +81,5 @@ public class Home extends AppCompatActivity {
             }
         });
     }
+
 }

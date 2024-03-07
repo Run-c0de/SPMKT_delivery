@@ -1,10 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MasVendidos">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?android:attr/colorActivatedHighlight"
+        app:menu="@menu/menu_carrito"
+        app:title="Mas Vendidos" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="39dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnatras"
+            android:layout_width="126dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="@string/btnatras"
+            android:textColor="#000000" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:iconifiedByDefault="false"
+        android:queryHint="Buscar Producto" />
 
 
     <com.google.android.material.card.MaterialCardView
@@ -89,70 +122,4 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_home"
-        android:layout_width="109dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="28dp"
-        android:backgroundTint="#F17A0A"
-        android:text="Home"
-        app:iconGravity="textStart"
-        app:iconSize="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_pedidos"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_pedidos"
-        android:layout_width="121dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="28dp"
-        android:backgroundTint="#F17A0A"
-        android:text="Pedidos"
-        app:iconGravity="textStart"
-        app:iconSize="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_direccion"
-        android:layout_width="125dp"
-        android:layout_height="57dp"
-        android:layout_marginBottom="28dp"
-        android:backgroundTint="#F17A0A"
-        android:text="Dirección"
-        app:iconGravity="textStart"
-        app:iconSize="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.958"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="313dp"
-        android:layout_height="139dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.027"
-        app:srcCompat="@drawable/logo_oficial" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lo mas Vendido"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.221" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
