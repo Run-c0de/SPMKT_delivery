@@ -31,7 +31,7 @@ public class Pantalla_Bebidas extends AppCompatActivity {
         setContentView(R.layout.activity_pantalla_bebidas);
 
 
-        Button btnatras = findViewById(R.id.btnatras);
+         btnatras = findViewById(R.id.btnatras);
 
         List<Producto> listaProductos = new ArrayList<>();
         listaProductos.add(new Producto("Bebida Energizante Raptor Zero Sin Azúcar Lata 473 Ml", "L 24.90", "L 19.92", R.drawable.producto1));
@@ -54,6 +54,8 @@ public class Pantalla_Bebidas extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 
 

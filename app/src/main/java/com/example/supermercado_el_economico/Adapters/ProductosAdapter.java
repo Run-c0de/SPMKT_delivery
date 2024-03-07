@@ -1,6 +1,7 @@
 package com.example.supermercado_el_economico.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.supermercado_el_economico.CarritoActivity;
+import com.example.supermercado_el_economico.Home;
+import com.example.supermercado_el_economico.Pantalla_Bebidas;
 import com.example.supermercado_el_economico.R;
 import com.example.supermercado_el_economico.models.Producto;
 
@@ -43,7 +47,8 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.Prod
         holder.buttonAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Lógica para agregar el producto al carrito
+                Intent intent = new Intent(v.getContext(), CarritoActivity.class);
+                v.getContext().startActivity(intent);
             }
         });
     }
