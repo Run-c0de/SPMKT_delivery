@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    tools:context=".Restablecer_contra">
+    tools:context=".Login.Restablecer_contra">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtCorreoRecuLayout"
@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:textColorHint="@color/black"
         app:startIconDrawable="@drawable/ic_username"
-        android:hint="Ingrese su Correo Eletronico"
+        android:hint="Ingrese su Correo Electronico"
         app:layout_constraintTop_toBottomOf="@+id/textView7">
 
         <com.google.android.material.textfield.TextInputEditText

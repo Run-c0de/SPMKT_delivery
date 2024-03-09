@@ -1,4 +1,4 @@
-package com.example.supermercado_el_economico;
+package com.example.supermercado_el_economico.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.supermercado_el_economico.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 

@@ -41,7 +41,7 @@
 
         <!-- MainActivity como actividad principal -->
         <activity
-            android:name=".MainActivity"
+            android:name=".Login.MainActivity"
             android:exported="false">
 
         </activity>
@@ -54,7 +54,7 @@
             android:name=".registro_token"
             android:exported="false" />
         <activity
-            android:name=".Pantalla_Inicio"
+            android:name=".Login.Pantalla_Inicio"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,13 +63,13 @@
         </activity>
 
         <activity
-            android:name=".Pantalla_Nueva_Password"
+            android:name=".Login.Pantalla_Nueva_Password"
             android:exported="false" />
         <activity
-            android:name=".Restablecer_contra"
+            android:name=".Login.Restablecer_contra"
             android:exported="false" />
         <activity
-            android:name=".Pantalla_verificacion"
+            android:name=".Login.Pantalla_verificacion"
             android:exported="false" />
 
         <activity
@@ -124,6 +124,11 @@
         <activity
             android:name="com.example.supermercado_el_economico.Delivery.PerfilRepartidor"
             android:exported="false" />
+
+        <activity
+            android:name="com.example.supermercado_el_economico.Shop.CustomerAddress"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

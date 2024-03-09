@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="10dp"
 
-    tools:context=".MainActivity">
+    tools:context=".Login.MainActivity">
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -21,7 +21,7 @@
         android:layout_marginBottom="20dp"
         android:textColorHint="@color/black"
         app:startIconDrawable="@drawable/ic_username"
-        android:hint="Ingrese su Correo Eletronico"
+        android:hint="Ingrese su Correo Electronico"
         app:boxBackgroundMode="outline">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -90,7 +90,7 @@
         android:layout_marginBottom="20dp"
         android:backgroundTint="#F17A0A"
         android:onClick="entrar"
-        android:text="INICIAR SECCION"
+        android:text="INICIAR"
         android:textColor="@color/black" />
 
     <!--edittext 2 -->
@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnlogin"
         android:gravity="center"
-        android:text="¿crear usuario ó restablecer Contraseña?"
+        android:text="¿Crear Usuario ó Restablecer Contraseña?"
         android:textColor="@color/black"
         android:textSize="16sp" />
     <!--layout para los dos botones -->

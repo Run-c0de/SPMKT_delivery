@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.supermercado_el_economico.R;
-import com.example.supermercado_el_economico.Restablecer_contra;
 
 public class CustomerAddress extends AppCompatActivity {
 
