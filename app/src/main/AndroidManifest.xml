@@ -5,6 +5,7 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -38,15 +39,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Supermercado_el_Economico"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Login.Pantalla_Login"
+            android:exported="false" />
         <!-- MainActivity como actividad principal -->
         <activity
             android:name=".Login.MainActivity"
-            android:exported="false">
-
-        </activity>
-
-        <!-- Otras actividades -->
+            android:exported="false"></activity> <!-- Otras actividades -->
         <activity
             android:name=".registro_user"
             android:exported="false" />
@@ -58,10 +57,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Login.Pantalla_Nueva_Password"
             android:exported="false" />
@@ -71,7 +70,6 @@
         <activity
             android:name=".Login.Pantalla_verificacion"
             android:exported="false" />
-
         <activity
             android:name=".ActualizarPerfil"
             android:exported="false" />
@@ -86,49 +84,34 @@
             android:exported="false" />
         <activity
             android:name=".Pantalla_Bebidas"
-            android:exported="false">
-
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".Pantalla_Lacteos"
             android:exported="false" />
-
         <activity
             android:name=".DetallePedidoActivity"
-            android:exported="false">
-
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".HistorialPedidoActivity"
-            android:exported="false">
-
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".CarritoActivity"
-            android:exported="false"/>
-
-        <!--  actividades faltantes-->
+            android:exported="false" /> <!-- actividades faltantes -->
         <activity
             android:name=".Home"
-            android:exported="true"/>
-
-
+            android:exported="true" />
         <activity
             android:name=".MasVendidos"
-            android:exported="false"/>
-
-        <activity
-            android:name="com.example.supermercado_el_economico.Delivery.HomeRepartidor"
-            android:exported="false"/>
-
-        <activity
-            android:name="com.example.supermercado_el_economico.Delivery.PerfilRepartidor"
             android:exported="false" />
-
         <activity
-            android:name="com.example.supermercado_el_economico.Shop.CustomerAddress"
-            android:exported="false"/>
-
+            android:name=".Delivery.HomeRepartidor"
+            android:exported="false" />
+        <activity
+            android:name=".Delivery.PerfilRepartidor"
+            android:exported="false" />
+        <activity
+            android:name=".Shop.CustomerAddress"
+            android:exported="false" />
     </application>
 
 </manifest>

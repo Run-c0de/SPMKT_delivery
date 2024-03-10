@@ -8,7 +8,6 @@
 
     tools:context=".Login.MainActivity">
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtcorreo"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -21,19 +20,16 @@
         android:layout_marginBottom="20dp"
         android:textColorHint="@color/black"
         app:startIconDrawable="@drawable/ic_username"
-        android:hint="Ingrese su Correo Electronico"
+        android:hint="Ingrese su Usuario"
         app:boxBackgroundMode="outline">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtcorreoEn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:inputType="text"
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
     <ImageView
         android:id="@+id/imageView2"
@@ -78,6 +74,7 @@
             android:inputType="textPassword"
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
+
     <!--Button entrar-->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnlogin"

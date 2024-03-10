@@ -3,11 +3,15 @@ package com.example.supermercado_el_economico.Login;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,7 +31,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -52,8 +57,26 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = txtcorreoEn.getText().toString().trim();
                 String password = txtpasswordEntrada.getText().toString().trim();
+                //  loginUsuario(username, password);
+                // loginUsuario("keyla.soriano", "12345");
+
+                // Validar que los campos no estén vacíos
+                if (TextUtils.isEmpty(username)) {
+                    txtcorreoEn.setError("Campo obligatorio");
+                    return;
+                } else {
+                    txtcorreoEn.setError(null);
+                }
+
+                if (TextUtils.isEmpty(password)) {
+                    txtpasswordEntrada.setError("Campo obligatorio");
+                    return;
+                } else {
+                    txtpasswordEntrada.setError(null);
+                }
+
+                // Aquí puedes llamar a tu método de inicio de sesión
                 loginUsuario(username, password);
-               // loginUsuario("keyla.soriano", "12345");
 
             }
         });
@@ -77,93 +100,115 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void loginUsuario(String Usuario, String clave) {
+    private void loginUsuario(final String username, final String password) {
+        // Crear un diálogo de progreso mientras se realiza la solicitud de inicio de sesión
+        ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage("Iniciando sesión...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
-        if (Usuario.isEmpty()) {
-            showAlert("Error", "Por favor, ingresa un nombre de usuario");
-            return;
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
 
-        if (clave.isEmpty()) {
-            showAlert("Error", "Por favor, ingresa una contraseña");
-            return;
-        }
+                JSONObject requestBody = new JSONObject();
+                try {
+                    requestBody.put("userName", username);
+                    requestBody.put("password", password);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(com.android.volley.Request.Method.POST,
+                        "https://delivery-service.azurewebsites.net/api/Autenticacion/Login", requestBody,
+                        new com.android.volley.Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                progressDialog.dismiss(); // Ocultar el diálogo de progreso
+                                try {
+                                    JSONObject dataObject = response.getJSONObject("data");
+                                    int userId = dataObject.getInt("userId");
+                                    String message = dataObject.getString("message");
+                                    int status = dataObject.getInt("status");
+                                    String codVerificacion = dataObject.getString("codVerificacion");
+                                    String username = dataObject.getString("username");
+                                    String rol = dataObject.getString("rol");
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("username", Usuario);
-            jsonObject.put("password", clave);
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, AuthenticationApiMethods.EndPointLogin,
-                    jsonObject, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        JSONObject dataObject = response.getJSONObject("data");
-                        int userId = dataObject.getInt("userId");
-                        String message = dataObject.getString("message");
-                        int status = dataObject.getInt("status");
-                        String codVerificacion = dataObject.getString("codVerificacion");
-                        String username = dataObject.getString("username");
-                        String rol = dataObject.getString("rol");
-
-                        if (codVerificacion.equals("")) {
-                            if (rol.equals("Cliente")) {
-                                Intent intent = new Intent(getApplicationContext(), Home.class);
-                                startActivity(intent);
-
-                            } else if (rol.equals("Repartidor"))  {
-                                Intent intent = new Intent(getApplicationContext(), HomeRepartidor.class);
-                                startActivity(intent);
+                                    if (status == 200) { // Inicio de sesión exitoso
+                                        String welcomeMessage = "¡Bienvenido, " + username + "!";
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                        builder.setMessage(welcomeMessage)
+                                                .setTitle("Inicio de sesión exitoso")
+                                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        // Cerrar el diálogo o realizar alguna acción adicional si es necesario
+                                                        dialog.dismiss();
+                                                        // Iniciar la actividad correspondiente después de mostrar el mensaje de bienvenida
+                                                        if (codVerificacion.equals("")) {
+                                                            if (rol.equals("Cliente")) {
+                                                                Intent intent = new Intent(getApplicationContext(), Home.class);
+                                                                startActivity(intent);
+                                                            } else if (rol.equals("Repartidor")) {
+                                                                //Intent intent = new Intent(getApplicationContext(), HomeRepartidor.class);
+                                                                //startActivity(intent);
+                                                            }
+                                                        } else {
+                                                            //enviar a pantalla de validar token
+                                                            Intent intent = new Intent(getApplicationContext(), Pantalla_verificacion.class);
+                                                            startActivity(intent);
+                                                        }
+                                                    }
+                                                });
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                    } else {
+                                        // Otro estado no manejado, muestra un mensaje genérico
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                        builder.setMessage("Usuario o contraseña incorrectos.")
+                                                .setTitle("Error de inicio de sesión")
+                                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        // Cerrar el diálogo o realizar alguna acción adicional si es necesario
+                                                        dialog.dismiss();
+                                                    }
+                                                });
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    // Toast.makeText(getApplicationContext(), "Error al procesar la respuesta del servidor", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        } else {
-                            //enviar a pantalla de validar token
-                            Intent intent = new Intent(getApplicationContext(), Pantalla_verificacion.class);
-                            startActivity(intent);
-                        }
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                       // Toast.makeText(getApplicationContext(), "Error al procesar la respuesta del servidor", Toast.LENGTH_SHORT).show();
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss(); // Ocultar el diálogo de progreso
+                        // Manejar el fallo de la solicitud de inicio de sesión
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setMessage("Usuario o contraseña incorrectos.")
+                                .setTitle("Error de inicio de sesión")
+                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // Cerrar el diálogo o realizar alguna acción adicional si es necesario
+                                        dialog.dismiss();
+                                    }
+                                });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
                     }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    if (error instanceof NetworkError) {
-                        showAlert("Error", "No se puede conectar al servidor. Verifique su conexión a internet.");
-                    } else if (error instanceof ServerError) {
-                        int status = error.networkResponse.statusCode;
-                        if (status == 404) {
-                            showAlert("Error", "Usuario Incorrecto ");
-                        } else if (status == 401) {
-                            showAlert("Error", "Contraseña incorrecta");
-                        } else {
-                            showAlert("Error", "Error del servidor: " + status);
-                        }
+                }) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> headers = new HashMap<>();
+                        headers.put("Content-Type", "application/json");
+                        return headers;
                     }
-                }
-            });
-            queue.add(jsonObjectRequest);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            showAlert("Error", "Error al procesar la solicitud");
-        }
-    }
+                };
 
-    private void showAlert(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title)
-                .setMessage(message)
-                .setPositiveButton("Aceptar", null)
-                .create()
-                .show();
+                requestQueue.add(jsonObjectRequest);
+            }
+        }).start();
     }
 }
-
-
-
