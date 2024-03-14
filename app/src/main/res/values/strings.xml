@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Supermercado_el_Economico</string>
+    <string name="app_name">Económico Shop App</string>
     <string name="Correo">Ingrese su Correo Electronico</string>
     <string name="Contraseña">Ingrese su Contraseña</string>
     <string name="textViewProductName">Nombre Producto</string>
