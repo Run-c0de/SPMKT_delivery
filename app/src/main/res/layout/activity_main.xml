@@ -19,6 +19,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:textColorHint="@color/black"
+        app:boxStrokeColor="#F17A0A"
         app:startIconDrawable="@drawable/ic_username"
         android:hint="Ingrese su Usuario"
         app:boxBackgroundMode="outline">
@@ -63,6 +64,7 @@
         android:layout_marginBottom="15dp"
         android:textColorHint="@color/black"
         app:endIconMode="password_toggle"
+        app:boxStrokeColor="#F17A0A"
         app:startIconDrawable="@drawable/canado"
         android:hint="Ingrese su Contraseña"
         app:boxBackgroundMode="outline">

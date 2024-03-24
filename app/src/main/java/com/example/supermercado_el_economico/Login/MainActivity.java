@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+
                 RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
 
                 JSONObject requestBody = new JSONObject();
@@ -122,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(com.android.volley.Request.Method.POST,
                         "https://delivery-service.azurewebsites.net/api/Autenticacion/Login", requestBody,
+
                         new com.android.volley.Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -150,13 +153,21 @@ public class MainActivity extends AppCompatActivity {
                                                                 Intent intent = new Intent(getApplicationContext(), Home.class);
                                                                 startActivity(intent);
                                                             } else if (rol.equals("Repartidor")) {
-                                                                //Intent intent = new Intent(getApplicationContext(), HomeRepartidor.class);
-                                                                //startActivity(intent);
+                                                                Intent intent = new Intent(getApplicationContext(), HomeRepartidor.class);
+                                                                startActivity(intent);
                                                             }
                                                         } else {
-                                                            //enviar a pantalla de validar token
+                                                            // Guardar el código de verificación y el ID del usuario en SharedPreferences
+                                                            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                            editor.putString("codVerificacion", codVerificacion);
+                                                            editor.putInt("userId", userId);
+                                                            editor.apply();
+
+                                                            // Ir a la pantalla de verificación
                                                             Intent intent = new Intent(getApplicationContext(), Pantalla_verificacion.class);
                                                             startActivity(intent);
+
                                                         }
                                                     }
                                                 });

@@ -5,7 +5,7 @@ public class AuthenticationApiMethods {
     public static final String EndPointLogin = URLAPI + "Autenticacion/Login";
     public static final String EndPointVerificarCodigo = "https://delivery-service.azurewebsites.net/api/Autenticacion/VerificarUsuario?usuarioId=1";
 
-    //public static final String  EndPointReenviarCodigo ="";
+    public static final String  EndPointReenviarCodigo ="";
 
 
 }

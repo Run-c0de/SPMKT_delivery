@@ -17,11 +17,12 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="362dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:boxStrokeColor="#F17A0A"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:textColorHint="@color/black"
         app:startIconDrawable="@drawable/ic_username"
-        android:hint="Ingrese su Correo Electronico"
+        android:hint="Ingrese su Usuario Registrado "
         app:layout_constraintTop_toBottomOf="@+id/textView7">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -36,22 +37,23 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnenviarT"
         android:layout_width="295dp"
         android:layout_height="52dp"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
+        android:layout_marginBottom="20dp"
         android:backgroundTint="?android:attr/colorActivatedHighlight"
-        android:text="Enviar Ticket"
+        android:text="Enviar"
         android:textColor="@color/black"
+
         android:textSize="14sp"
-
         app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent" />
-
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView7"
@@ -78,7 +80,7 @@
         android:layout_marginTop="660dp"
         android:layout_marginEnd="16dp"
         android:lineSpacingExtra="4dp"
-        android:text="Para poder recuperar su cuenta, escriba su correo electrónico registrado en el campo de texto correspondiente. Nosotros le enviaremos una contraseña temporal a su correo previamente registrado."
+        android:text="Para poder recuperar su cuenta, escriba su codigo de usuario en el campo de texto correspondiente. Nosotros le enviaremos una contraseña temporal a su usuario previamente registrado."
         android:textAlignment="viewStart"
         android:textColor="#0C0C0C"
         android:textSize="16sp"
