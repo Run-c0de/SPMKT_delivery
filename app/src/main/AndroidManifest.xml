@@ -39,6 +39,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Supermercado_el_Economico"
         tools:targetApi="31">
+        <activity
+            android:name=".Login.Pantalla_Login"
+            android:exported="false" />
         <!-- MainActivity como actividad principal -->
         <activity
             android:name=".Login.MainActivity"
