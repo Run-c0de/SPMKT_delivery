@@ -140,7 +140,7 @@ public class Home extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // productos por id
                 int selectedCategoryId = categoryId;
 
                 Intent intent = new Intent(Home.this, PantallaProductos.class);
