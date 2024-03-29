@@ -76,9 +76,12 @@ public class Home extends AppCompatActivity {
                         JSONObject category = data.getJSONObject(i);
                         boolean isActive = category.getBoolean("activo");
                         if (isActive) {
-                            String imageUrl = category.getString("foto");
-                            String description = category.getString("descripcion");
-                            createImageButton(imageUrl, description, i);
+                            int categoryId = category.getInt("categoriaId");
+                            if (categoryId >= 2) { // Comienza desde el ID 2
+                                String imageUrl = category.getString("foto");
+                                String description = category.getString("descripcion");
+                                createImageButton(imageUrl, description, categoryId);
+                            }
                         }
                     }
                 } catch (JSONException e) {
@@ -88,10 +91,9 @@ public class Home extends AppCompatActivity {
         }
     }
 
-    private void createImageButton(String imageUrl, String description, int index) {
-        // Corregir la URL de la imagen si tiene una extensión duplicada
+    private void createImageButton(String imageUrl, String description, int categoryId) {
 
-        // Crear un contenedor lineal horizontal para cada ImageButton y su descripción
+
         LinearLayout container = new LinearLayout(this);
         container.setOrientation(LinearLayout.HORIZONTAL);
         LinearLayout.LayoutParams containerParams = new LinearLayout.LayoutParams(
@@ -101,13 +103,11 @@ public class Home extends AppCompatActivity {
         container.setLayoutParams(containerParams);
         container.setPadding(16, 16, 16, 16); // Ajustar el padding para separar los elementos
 
-        // Crear el ImageButton
         ImageButton imageButton = new ImageButton(this);
         LinearLayout.LayoutParams imageButtonParams = new LinearLayout.LayoutParams(300, 280);
         imageButton.setLayoutParams(imageButtonParams);
         container.addView(imageButton);
 
-        // Crear el TextView para la descripción
         TextView textView = new TextView(this);
         LinearLayout.LayoutParams textViewParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -119,10 +119,8 @@ public class Home extends AppCompatActivity {
         textView.setPadding(16, 0, 0, 0); // Ajustar el padding para separar el texto del botón
         container.addView(textView);
 
-        // Agregar el contenedor al layout principal
         layout.addView(container);
 
-        // Carga de imagen asíncrona utilizando Glide con manejo de errores
         Glide.with(this)
                 .load(imageUrl)
                 .listener(new RequestListener<Drawable>() {
@@ -139,31 +137,14 @@ public class Home extends AppCompatActivity {
                 })
                 .into(imageButton);
 
-        // Asignar un listener de clic para todos los botones
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Aquí puedes realizar acciones específicas para cada botón si es necesario
-                // Por ejemplo, puedes abrir diferentes actividades dependiendo del botón presionado
-                Intent intent;
-                switch (index) {
-                    case 0:
-                        intent = new Intent(Home.this, Pantalla_Carnes_res_Aves.class);
-                        break;
-                    case 1:
-                        intent = new Intent(Home.this, Pantalla_Bebidas.class);
-                        break;
-                    case 2:
-                        intent = new Intent(Home.this, Pantalla_Lacteos.class);
-                        break;
-                    case 3:
-                        intent = new Intent(Home.this, Pantalla_Bebidas.class);
-                        break;
-                    // Agrega más casos según sea necesario para otros índices
-                    default:
-                        intent = new Intent(Home.this, Pantalla_Panaderia.class);
-                        break;
-                }
+
+                int selectedCategoryId = categoryId;
+
+                Intent intent = new Intent(Home.this, PantallaProductos.class);
+                intent.putExtra("categoryId", selectedCategoryId);
                 startActivity(intent);
             }
         });

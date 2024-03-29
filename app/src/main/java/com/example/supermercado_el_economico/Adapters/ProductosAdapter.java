@@ -13,42 +13,49 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.supermercado_el_economico.CarritoActivity;
-import com.example.supermercado_el_economico.Home;
-import com.example.supermercado_el_economico.Pantalla_Bebidas;
 import com.example.supermercado_el_economico.R;
 import com.example.supermercado_el_economico.models.Producto;
+import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.ProductoViewHolder> {
 
     private List<Producto> listaProductos;
+    private List<Producto> productosSeleccionados; // Lista para almacenar productos seleccionados
     private Context context;
 
     public ProductosAdapter(List<Producto> listaProductos) {
         this.listaProductos = listaProductos;
+        this.productosSeleccionados = new ArrayList<>(); // Inicializar la lista de productos seleccionados
     }
 
     @NonNull
     @Override
     public ProductoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View view = LayoutInflater.from(context).inflate(R.layout.item_product, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.productoxcategoria, parent, false);
         return new ProductoViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProductoViewHolder holder, int position) {
         Producto producto = listaProductos.get(position);
-        holder.imageViewProduct.setImageResource(producto.getImageResourceId());
+        Glide.with(context)
+                .load(producto.getFoto())
+                .into(holder.imageViewProduct);
         holder.textViewProductName.setText(producto.getNombre());
-        holder.textViewPriceReal.setText(producto.getPrecioReal());
-        holder.textViewPriceDiscount.setText(producto.getPrecioDescuento());
+        holder.textViewPriceReal.setText(String.valueOf(producto.getPrecio()));
+        holder.textViewIVS.setText(String.valueOf(producto.getIsv()));
         holder.buttonAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), CarritoActivity.class);
-                v.getContext().startActivity(intent);
+                Producto productoSeleccionado = listaProductos.get(holder.getAdapterPosition());
+                productosSeleccionados.add(productoSeleccionado);
+                Intent intent = new Intent(context, CarritoActivity.class);
+                intent.putExtra("productos_seleccionados", new ArrayList<>(productosSeleccionados));
+                context.startActivity(intent);
             }
         });
     }
@@ -62,7 +69,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.Prod
         ImageView imageViewProduct;
         TextView textViewProductName;
         TextView textViewPriceReal;
-        TextView textViewPriceDiscount;
+        TextView textViewIVS;
         Button buttonAddToCart;
 
         public ProductoViewHolder(@NonNull View itemView) {
@@ -70,7 +77,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.Prod
             imageViewProduct = itemView.findViewById(R.id.imageViewProduct);
             textViewProductName = itemView.findViewById(R.id.textViewProductName);
             textViewPriceReal = itemView.findViewById(R.id.textViewPriceReal);
-            textViewPriceDiscount = itemView.findViewById(R.id.textViewPriceDiscount);
+            textViewIVS = itemView.findViewById(R.id.textViewIVS);
             buttonAddToCart = itemView.findViewById(R.id.buttonAddToCart);
         }
     }

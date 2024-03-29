@@ -1,16 +1,32 @@
 package com.example.supermercado_el_economico.models;
 
 public class Producto {
+    private int productoId;
     private String nombre;
-    private String precioReal;
-    private String precioDescuento;
-    private int imageResourceId;
+    private double precio;
+    private double isv;
+    private int categoriaId;
+    private int medidaId;
+    private String foto;
+    private boolean activo;
 
-    public Producto(String nombre, String precioReal, String precioDescuento, int imageResourceId) {
+    public Producto(int productoId, String nombre, double precio, double isv, int categoriaId, int medidaId, String foto, boolean activo) {
+        this.productoId = productoId;
         this.nombre = nombre;
-        this.precioReal = precioReal;
-        this.precioDescuento = precioDescuento;
-        this.imageResourceId = imageResourceId;
+        this.precio = precio;
+        this.isv = isv;
+        this.categoriaId = categoriaId;
+        this.medidaId = medidaId;
+        this.foto = foto;
+        this.activo = activo;
+    }
+
+    public int getProductoId() {
+        return productoId;
+    }
+
+    public void setProductoId(int productoId) {
+        this.productoId = productoId;
     }
 
     public String getNombre() {
@@ -21,27 +37,51 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public String getPrecioReal() {
-        return precioReal;
+    public double getPrecio() {
+        return precio;
     }
 
-    public void setPrecioReal(String precioReal) {
-        this.precioReal = precioReal;
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
-    public String getPrecioDescuento() {
-        return precioDescuento;
+    public double getIsv() {
+        return isv;
     }
 
-    public void setPrecioDescuento(String precioDescuento) {
-        this.precioDescuento = precioDescuento;
+    public void setIsv(double isv) {
+        this.isv = isv;
     }
 
-    public int getImageResourceId() {
-        return imageResourceId;
+    public int getCategoriaId() {
+        return categoriaId;
     }
 
-    public void setImageResourceId(int imageResourceId) {
-        this.imageResourceId = imageResourceId;
+    public void setCategoriaId(int categoriaId) {
+        this.categoriaId = categoriaId;
+    }
+
+    public int getMedidaId() {
+        return medidaId;
+    }
+
+    public void setMedidaId(int medidaId) {
+        this.medidaId = medidaId;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

@@ -8,4 +8,5 @@
     <string name="buttonAddToCart">Add to Cart</string>
     <string name="nombre">Nombre</string>
     <string name="btnatras"><![CDATA[<- Atras]]></string>
+    <string name="textViewIVS">IVS</string>
 </resources>
