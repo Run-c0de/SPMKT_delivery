@@ -71,9 +71,13 @@ public class Restablecer_contra extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                ProgressDialog progressDialogEnvioToken = new ProgressDialog(Restablecer_contra.this);
+                progressDialogEnvioToken.setMessage("Enviando clave temporal...");
+                progressDialogEnvioToken.setCancelable(false);
+                progressDialogEnvioToken.show();
 
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(com.android.volley.Request.Method.POST,
-                        "https://delivery-service.azurewebsites.net/api/Autenticacion/ReestablcerPassword?usuario="+username, requestBody,
+                        "https://delivery-service.azurewebsites.net/api/Autenticacion/EnviarClaveTemporal?usuario="+username, requestBody,
 
                         new com.android.volley.Response.Listener<JSONObject>() {
                             @Override
@@ -81,73 +85,25 @@ public class Restablecer_contra extends AppCompatActivity {
                                 progressDialog.dismiss(); // Ocultar el diálogo de progreso
                                 try {
                                     JSONObject dataObject = response.getJSONObject("data");
-                                    String user = dataObject.getString("userName");
+                                    Integer userId = dataObject.getInt("userId");
                                     String message = dataObject.getString("message");
                                     String claveTemp = dataObject.getString("claveTemporal");
+                                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
 
                                     if(claveTemp != ""){
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(Restablecer_contra.this);
-                                        builder.setMessage(message)
-                                                .setTitle("Clave temporal")
-                                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener(){
-                                                    public void onClick(DialogInterface dialog, int id){
-                                                        dialog.dismiss();
-                                                    }
+                                        editor.putString("claveTemp", claveTemp);
+                                        editor.putInt("userIdReestablecer", userId);
+                                        editor.apply();
 
-                                                });
+                                        showAlert("Clave Temporal", message);
+                                        Intent intent = new Intent(getApplicationContext(), Pantalla_Nueva_Password.class);
+                                        startActivity(intent);
+                                    }else{
+                                        showAlert("Error", "Intenta reenviar nuevamente la clave temporal.");
                                     }
-                                    //if (status == 200) { // Inicio de sesión exitoso
-//                                        String welcomeMessage = "¡Bienvenido, " + username + "!";
-//                                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//                                        builder.setMessage(welcomeMessage)
-//                                                .setTitle("Inicio de sesión exitoso")
-//                                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-//                                                    public void onClick(DialogInterface dialog, int id) {
-//                                                        // Cerrar el diálogo o realizar alguna acción adicional si es necesario
-//                                                        dialog.dismiss();
-//                                                        // Iniciar la actividad correspondiente después de mostrar el mensaje de bienvenida
-//                                                        if (codVerificacion.equals("")) {
-//                                                            if (rol.equals("Cliente")) {
-//                                                                Intent intent = new Intent(getApplicationContext(), Home.class);
-//                                                                startActivity(intent);
-//                                                            } else if (rol.equals("Repartidor")) {
-//                                                                Intent intent = new Intent(getApplicationContext(), HomeRepartidor.class);
-//                                                                startActivity(intent);
-//                                                            }
-//                                                        } else {
-//                                                            // Guardar el código de verificación y el ID del usuario en SharedPreferences
-//                                                            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-//                                                            SharedPreferences.Editor editor = sharedPreferences.edit();
-//                                                            editor.putString("codVerificacion", codVerificacion);
-//                                                            editor.putInt("userId", userId);
-//                                                            editor.apply();
-//
-//                                                            // Ir a la pantalla de verificación
-//                                                            Intent intent = new Intent(getApplicationContext(), Pantalla_verificacion.class);
-//                                                            startActivity(intent);
-//
-//                                                        }
-//                                                    }
-//                                                });
-//                                        AlertDialog dialog = builder.create();
-//                                        dialog.show();
-//                                    } else {
-//                                        // Otro estado no manejado, muestra un mensaje genérico
-//                                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//                                        builder.setMessage("Usuario o contraseña incorrectos.")
-//                                                .setTitle("Error de inicio de sesión")
-//                                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-//                                                    public void onClick(DialogInterface dialog, int id) {
-//                                                        // Cerrar el diálogo o realizar alguna acción adicional si es necesario
-//                                                        dialog.dismiss();
-//                                                    }
-//                                                });
-//                                        AlertDialog dialog = builder.create();
-//                                        dialog.show();
-//                                    }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                    // Toast.makeText(getApplicationContext(), "Error al procesar la respuesta del servidor", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }, new Response.ErrorListener() {
@@ -156,11 +112,10 @@ public class Restablecer_contra extends AppCompatActivity {
                         progressDialog.dismiss(); // Ocultar el diálogo de progreso
                         // Manejar el fallo de la solicitud de inicio de sesión
                         AlertDialog.Builder builder = new AlertDialog.Builder(Restablecer_contra.this);
-                        builder.setMessage("Usuario o contraseña incorrectos.")
-                                .setTitle("Error de inicio de sesión")
+                        builder.setMessage("No se puedo enviar clave temporal.")
+                                .setTitle("Clave temporal")
                                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        // Cerrar el diálogo o realizar alguna acción adicional si es necesario
                                         dialog.dismiss();
                                     }
                                 });
@@ -179,46 +134,6 @@ public class Restablecer_contra extends AppCompatActivity {
                 requestQueue.add(jsonObjectRequest);
             }
         }).start();
-//        String correo = txtCorreoRe.getText().toString().trim();
-//
-//        JSONObject jsonObject = new JSONObject();
-//        try {
-//            jsonObject.put("usuario", correo);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        String url = "https://tu_servidor.com/api/ReestablecerPassword";
-//
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//                            JSONObject data = response.getJSONObject("data");
-//                            String userName = data.getString("userName");
-//                            String claveTemporal = data.getString("claveTemporal");
-//                            String message = data.getString("message");
-//
-//                            // Maneja la respuesta del servidor y redirige a la pantalla de verificación
-//                            Intent intent = new Intent(Restablecer_contra.this, Pantalla_verificacion.class);
-//                            intent.putExtra("userName", userName);
-//                            intent.putExtra("claveTemporal", claveTemporal);
-//                            intent.putExtra("message", message);
-//                            startActivity(intent);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                            // Manejar el error de análisis JSON
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                // Manejar errores de la solicitud
-//            }
-//        });
-//
-//        requestQueue.add(jsonObjectRequest);
     }
 
     private boolean validar() {
@@ -229,5 +144,13 @@ public class Restablecer_contra extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+    private void showAlert(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("Aceptar", null)
+                .create()
+                .show();
     }
 }
