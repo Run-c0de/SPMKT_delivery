@@ -162,6 +162,9 @@ public class MainActivity extends AppCompatActivity {
                                                             SharedPreferences.Editor editor = sharedPreferences.edit();
                                                             editor.putString("codVerificacion", codVerificacion);
                                                             editor.putInt("userId", userId);
+                                                            editor.putString("username", username);
+                                                            editor.putString("password", password);
+
                                                             editor.apply();
 
                                                             // Ir a la pantalla de verificación

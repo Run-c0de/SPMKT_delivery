@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -62,14 +63,101 @@ public class Pantalla_verificacion extends AppCompatActivity {
         });
 
         btnreenviar.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                 reenviarCodigo();
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                final String username = sharedPreferences.getString("username", "");
+                final String pass = sharedPreferences.getString("password", "");
+
+                reenviarCodigo(username, pass);
             }
         });
     }
 
-    private void reenviarCodigo() {
+    private void reenviarCodigo(String username, String password) {
+        ProgressDialog progressDialog = new ProgressDialog(Pantalla_verificacion.this);
+        progressDialog.setMessage("Reenviando...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                RequestQueue requestQueue = Volley.newRequestQueue(Pantalla_verificacion.this);
+
+                JSONObject requestBody = new JSONObject();
+                try {
+                    requestBody.put("userName", username);
+                    requestBody.put("password", password);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(com.android.volley.Request.Method.POST,
+                        "https://delivery-service.azurewebsites.net/api/Autenticacion/Login", requestBody,
+
+                        new com.android.volley.Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                progressDialog.dismiss(); // Ocultar el diálogo de progreso
+                                try {
+                                    JSONObject dataObject = response.getJSONObject("data");
+                                    int userId = dataObject.getInt("userId");
+                                    String message = dataObject.getString("message");
+                                    int status = dataObject.getInt("status");
+                                    String codVerificacion = dataObject.getString("codVerificacion");
+                                    String username = dataObject.getString("username");
+                                    String rol = dataObject.getString("rol");
+
+                                    if (status == 200) { // Inicio de sesión exitoso
+
+                                        if (!codVerificacion.equals("")) {
+                                            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            editor.putString("codVerificacion", codVerificacion);
+                                            editor.putInt("userId", userId);
+                                            editor.apply();
+
+                                            showAlert("Código Verifiación", "Se ha reeviado código verificación.");
+                                        }
+
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    // Toast.makeText(getApplicationContext(), "Error al procesar la respuesta del servidor", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss(); // Ocultar el diálogo de progreso
+                        // Manejar el fallo de la solicitud de inicio de sesión
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Pantalla_verificacion.this);
+                        builder.setMessage("Usuario o contraseña incorrectos.")
+                                .setTitle("Error de inicio de sesión")
+                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // Cerrar el diálogo o realizar alguna acción adicional si es necesario
+                                        dialog.dismiss();
+                                    }
+                                });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                }) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> headers = new HashMap<>();
+                        headers.put("Content-Type", "application/json");
+                        return headers;
+                    }
+                };
+
+                requestQueue.add(jsonObjectRequest);
+            }
+        }).start();
     }
 
     private void verificarCodigo() {
