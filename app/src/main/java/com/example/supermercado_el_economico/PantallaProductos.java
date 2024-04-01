@@ -1,5 +1,6 @@
 package com.example.supermercado_el_economico;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.supermercado_el_economico.Adapters.ProductosAdapter;
+import com.example.supermercado_el_economico.Delivery.HomeRepartidor;
+import com.example.supermercado_el_economico.Delivery.PerfilRepartidor;
 import com.example.supermercado_el_economico.models.Producto;
 
 import org.json.JSONArray;
@@ -49,7 +52,8 @@ public class PantallaProductos extends AppCompatActivity {
         btnatras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(PantallaProductos.this, Home.class);
+                startActivity(intent);
             }
         });
     }

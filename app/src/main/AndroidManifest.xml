@@ -74,21 +74,10 @@
         <activity
             android:name=".ActualizarPerfil"
             android:exported="false" />
-        <activity
-            android:name=".Pantalla_Panaderia"
-            android:exported="false" />
-        <activity
-            android:name=".Pantalla_Frutas_Verduras"
-            android:exported="false" />
-        <activity
-            android:name=".Pantalla_Carnes_res_Aves"
-            android:exported="false" />
+
         <activity
             android:name=".PantallaProductos"
             android:exported="true"></activity>
-        <activity
-            android:name=".Pantalla_Lacteos"
-            android:exported="false" />
         <activity
             android:name=".DetallePedidoActivity"
             android:exported="false"></activity>
