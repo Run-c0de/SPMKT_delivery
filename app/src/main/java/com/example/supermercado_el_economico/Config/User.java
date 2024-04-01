@@ -2,7 +2,7 @@ package com.example.supermercado_el_economico.Config;
 
 public class User {
 
-    private Integer id;
+    private int usuarioId;
     private String nombre;
     private String apellido;
     private int telefono;
@@ -15,8 +15,8 @@ public class User {
     private boolean activo;
     private boolean Repartidor;
 
-    public User(Integer id, String nombre, String apellido, int telefono, String direccion, String correo, String usuario, String pass, String foto) {
-        this.id = id;
+    public User(int usuarioId, String nombre, String apellido, int telefono, String direccion, String correo, String usuario, String pass, String foto) {
+        this.usuarioId = usuarioId;
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
@@ -30,12 +30,12 @@ public class User {
     public User (){
 
     }
-    public Integer getId() {
-        return id;
+    public int  getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     public String getNombre() {

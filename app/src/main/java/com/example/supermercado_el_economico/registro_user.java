@@ -109,6 +109,7 @@ public class registro_user extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
         User usuario = new User();
 
+        usuario.setUsuarioId(0);
         usuario.setNombre(nombre.getText().toString());
         usuario.setApellido(apellido.getText().toString());
         usuario.setTelefono(Integer.parseInt(telefono.getText().toString()));
@@ -121,12 +122,13 @@ public class registro_user extends AppCompatActivity {
         usuario.setVerificado(false); // Por ejemplo, establecer como no verificado
         usuario.setActivo(true); // Por ejemplo, establecer como no verificado
 
-        usuario.setId(0);
+
 
 
         JSONObject jsonperson = new JSONObject();
 
         try {
+            jsonperson.put("usuarioId", usuario.getUsuarioId());
             jsonperson.put("usuario", usuario.getUsuario());
             jsonperson.put("password", usuario.getPass());
             jsonperson.put("nombres", usuario.getNombre());
