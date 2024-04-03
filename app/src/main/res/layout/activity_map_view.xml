@@ -8,12 +8,22 @@
 
     <!-- EditText para la dirección -->
     <EditText
+        android:id="@+id/nombreInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="Ingrese"
+        android:minHeight="48dp" />
+
+    <!-- EditText para la dirección -->
+    <EditText
         android:id="@+id/addressInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:hint="Ingrese dirección aquí"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:layout_below="@id/nombreInput"/>
 
 
     <Button
@@ -22,7 +32,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/addressInput"
         android:text="Capturar Ubicación"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        />
+
 
 
     <androidx.fragment.app.FragmentContainerView

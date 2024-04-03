@@ -45,6 +45,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
@@ -57,5 +58,8 @@
         app:itemTextAppearanceInactive="?android:attr/textAppearanceMedium"
         app:itemTextColor="#0A0000"
         app:menu="@menu/bottom_navigation_menu" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

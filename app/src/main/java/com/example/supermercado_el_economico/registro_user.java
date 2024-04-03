@@ -112,12 +112,12 @@ public class registro_user extends AppCompatActivity {
         usuario.setUsuarioId(0);
         usuario.setNombre(nombre.getText().toString());
         usuario.setApellido(apellido.getText().toString());
-        usuario.setTelefono(Integer.parseInt(telefono.getText().toString()));
+        usuario.setTelefono(telefono.getText().toString());
         usuario.setDireccion(direccion.getText().toString());
         usuario.setCorreo(correo.getText().toString());
         usuario.setUsuario(usuarios.getText().toString());
         usuario.setPass(pass.getText().toString());
-        usuario.setFoto(ConvertImageBase64(FotoPath));
+        usuario.setFoto("");
 
         usuario.setVerificado(false); // Por ejemplo, establecer como no verificado
         usuario.setActivo(true); // Por ejemplo, establecer como no verificado

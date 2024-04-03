@@ -5,7 +5,7 @@ public class User {
     private int usuarioId;
     private String nombre;
     private String apellido;
-    private int telefono;
+    private String telefono;
     private String direccion;
     private String correo;
     private String usuario;
@@ -15,7 +15,7 @@ public class User {
     private boolean activo;
     private boolean Repartidor;
 
-    public User(int usuarioId, String nombre, String apellido, int telefono, String direccion, String correo, String usuario, String pass, String foto) {
+    public User(int usuarioId, String nombre, String apellido, String telefono, String direccion, String correo, String usuario, String pass, String foto) {
         this.usuarioId = usuarioId;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -54,11 +54,11 @@ public class User {
         this.apellido = apellido;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
