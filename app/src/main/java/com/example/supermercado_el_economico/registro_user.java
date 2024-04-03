@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.util.Base64;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,6 +38,8 @@ import com.example.supermercado_el_economico.Config.User;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -41,6 +47,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class registro_user extends AppCompatActivity {
 
@@ -53,7 +61,7 @@ public class registro_user extends AppCompatActivity {
     String FotoPath;
     ImageView imageView;
 
-    private RequestQueue requestQueue;
+    //private RequestQueue requestQueue;
     //Button btnSiguiente, btnFoto;
     private MaterialButton btnSiguiente, btnFoto;
 
@@ -92,9 +100,7 @@ public class registro_user extends AppCompatActivity {
         btnSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //validarDatos();
-                SendData();
+               validarDatos();
             }
         });
 
@@ -103,69 +109,133 @@ public class registro_user extends AppCompatActivity {
 
 
     //VALIDA QUE QUEDEN CAMPOS VACIOS
+    private void validarDatos() {
+        if (nombre.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "Debe de escribir un nombre", Toast.LENGTH_LONG).show();
+        } else if (apellido.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "Debe de escribir un apellido", Toast.LENGTH_LONG).show();
+        } else if (telefono.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "Debe de escribir un telefono", Toast.LENGTH_LONG).show();
+        } else if (direccion.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "Debe de escribir una direccion", Toast.LENGTH_LONG).show();
+        } else if (correo.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "Debe de escribir un correo", Toast.LENGTH_LONG).show();
+        } else if (usuarios.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "Debe de escribir un usuario", Toast.LENGTH_LONG).show();
+        } else if (pass.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "Debe de escribir un password", Toast.LENGTH_LONG).show();
+        } else {
+            SendData();
+        }
+    }
 
 
     private void SendData() {
-        requestQueue = Volley.newRequestQueue(this);
-        User usuario = new User();
-
-        usuario.setUsuarioId(0);
-        usuario.setNombre(nombre.getText().toString());
-        usuario.setApellido(apellido.getText().toString());
-        usuario.setTelefono(telefono.getText().toString());
-        usuario.setDireccion(direccion.getText().toString());
-        usuario.setCorreo(correo.getText().toString());
-        usuario.setUsuario(usuarios.getText().toString());
-        usuario.setPass(pass.getText().toString());
-        usuario.setFoto("");
-
-        usuario.setVerificado(false); // Por ejemplo, establecer como no verificado
-        usuario.setActivo(true); // Por ejemplo, establecer como no verificado
-
-
-
-
-        JSONObject jsonperson = new JSONObject();
-
-        try {
-            jsonperson.put("usuarioId", usuario.getUsuarioId());
-            jsonperson.put("usuario", usuario.getUsuario());
-            jsonperson.put("password", usuario.getPass());
-            jsonperson.put("nombres", usuario.getNombre());
-            jsonperson.put("apellidos", usuario.getApellido());
-            jsonperson.put("telefono", usuario.getTelefono());
-            jsonperson.put("direccion", usuario.getDireccion());
-            jsonperson.put("correo", usuario.getCorreo());
-            jsonperson.put("foto", usuario.getFoto());
-            // Agregar el campo "verificado" al objeto JSON
-            jsonperson.put("verificado", usuario.isVerificado());
-            jsonperson.put("activo", usuario.isActivo());
-
-
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
-                RestApiMethods.EndPointCreatePerson, jsonperson, new Response.Listener<JSONObject>() {
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    String mensaje = response.getString("messaje");
-                    Toast.makeText(getApplicationContext(), mensaje, Toast.LENGTH_LONG).show();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+            public void run() {
+                RequestQueue requestQueue = Volley.newRequestQueue(registro_user.this);
+                User usuario = new User();
+
+                usuario.setUsuarioId(0);
+                usuario.setNombre(nombre.getText().toString());
+                usuario.setApellido(apellido.getText().toString());
+                usuario.setTelefono(telefono.getText().toString());
+                usuario.setDireccion(direccion.getText().toString());
+                usuario.setCorreo(correo.getText().toString());
+                usuario.setUsuario(usuarios.getText().toString());
+                usuario.setPass(pass.getText().toString());
+                usuario.setFoto("");
+                usuario.setVerificado(false);
+                usuario.setActivo(true);
+
+                JSONObject requestBody = new JSONObject();
+                try{
+                    requestBody.put("usuarioId", usuario.getUsuarioId());
+                    requestBody.put("usuario", usuario.getUsuario());
+                    requestBody.put("password", usuario.getPass());
+                    requestBody.put("nombres", usuario.getNombre());
+                    requestBody.put("apellidos", usuario.getApellido());
+                    requestBody.put("telefono", usuario.getTelefono());
+                    requestBody.put("direccion", usuario.getDireccion());
+                    requestBody.put("correo", usuario.getCorreo());
+                    requestBody.put("foto", usuario.getFoto());
+                    // Agregar el campo "verificado" al objeto JSON
+                    requestBody.put("verificado", usuario.isVerificado());
+                    requestBody.put("activo", usuario.isActivo());
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.getMessage().toString(), Toast.LENGTH_LONG).show();
-            }
-        });
+                catch (JSONException e){
+                    e.printStackTrace();
+                }
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                        RestApiMethods.EndPointCreatePerson, requestBody,
+                        new Response.Listener<JSONObject>() {
 
-        requestQueue.add(request);
-        // limpiarCampos();
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try{
+                                    JSONObject dataObject = response.getJSONObject("data");
+                                    int userId =  dataObject.getInt("usuarioId");
+                                    Log.i("error", response.toString());
+                                    if(userId > 0){
+                                        showAlert("Exito", "Se ha creado con exito el usuario");
+                                    }else{
+                                        showAlert("Advertencia", "No se creo el usuario");
+                                    }
+                                }
+                                catch (JSONException e){
+                                    e.printStackTrace();
+                                    showAlert("Error", e.getMessage().toString());
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.i("error", error.toString());
+                                String errorResponse = new String(error.networkResponse.data);
+                                try{
+                                    JSONObject jsonObjectError = new JSONObject(errorResponse);
+                                    JSONArray errorsArray = jsonObjectError.getJSONArray("errors");
+                                    JSONObject errorObject = errorsArray.getJSONObject(0);
+                                    String detailMessage = errorObject.getString("detail");
+                                    showAlert("Error", detailMessage.toString());
+                                }catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> headers = new HashMap<>();
+                        headers.put("Content-Type", "application/json");
+                        return headers;
+                    }
+                };
+                requestQueue.add(jsonObjectRequest);
+            }
+        }).start();
+    }
+
+    private void showAlert(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("Aceptar", null)
+                .create()
+                .show();
+    }
+
+    private void limpiarCampos()
+    {
+        nombre.setText("");
+        apellido.setText("");
+        telefono.setText("");
+        direccion.setText("");
+        correo.setText("");
+        usuarios.setText("");
+        pass.setText("");
+        imageView.setImageDrawable(null);
     }
 
     private String ConvertImageBase64(String path)
