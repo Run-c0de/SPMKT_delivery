@@ -35,12 +35,14 @@ public class Restablecer_contra extends AppCompatActivity {
     private TextInputEditText txtCorreoRe;
 
     private MaterialButton btnenviartocket;
+    ProgressDialog progressDialogEnvioToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restablecer_contra);
         txtCorreoRe =(TextInputEditText) findViewById(R.id.txtCorreoRecu);
         btnenviartocket =(MaterialButton) findViewById(R.id.btnenviarT);
+
 
         btnenviartocket.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,10 +56,7 @@ public class Restablecer_contra extends AppCompatActivity {
     }
 
     private void enviarSolicitudRestablecer(String username) {
-        ProgressDialog progressDialog = new ProgressDialog(Restablecer_contra.this);
-        progressDialog.setMessage("Enviando...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+       // showDialog("Enviando...");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -70,11 +69,7 @@ public class Restablecer_contra extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-                ProgressDialog progressDialogEnvioToken = new ProgressDialog(Restablecer_contra.this);
-                progressDialogEnvioToken.setMessage("Enviando clave temporal...");
-                progressDialogEnvioToken.setCancelable(false);
-                progressDialogEnvioToken.show();
+                //showDialog("Enviando clave temporal...");
 
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(com.android.volley.Request.Method.POST,
                         "https://delivery-service.azurewebsites.net/api/Autenticacion/EnviarClaveTemporal?usuario="+username, requestBody,
@@ -82,8 +77,8 @@ public class Restablecer_contra extends AppCompatActivity {
                         new com.android.volley.Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                progressDialog.dismiss(); // Ocultar el diálogo de progreso
                                 try {
+                                   // progressDialogEnvioToken.dismiss();
                                     JSONObject dataObject = response.getJSONObject("data");
                                     Integer userId = dataObject.getInt("userId");
                                     String message = dataObject.getString("message");
@@ -109,7 +104,6 @@ public class Restablecer_contra extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        progressDialog.dismiss(); // Ocultar el diálogo de progreso
                         // Manejar el fallo de la solicitud de inicio de sesión
                         AlertDialog.Builder builder = new AlertDialog.Builder(Restablecer_contra.this);
                         builder.setMessage("No se puedo enviar clave temporal.")
@@ -152,5 +146,12 @@ public class Restablecer_contra extends AppCompatActivity {
                 .setPositiveButton("Aceptar", null)
                 .create()
                 .show();
+    }
+
+    private void showDialog(String message) {
+        progressDialogEnvioToken = new ProgressDialog(Restablecer_contra.this);
+        progressDialogEnvioToken.setMessage(message);
+        progressDialogEnvioToken.setCancelable(false);
+        progressDialogEnvioToken.show();
     }
 }

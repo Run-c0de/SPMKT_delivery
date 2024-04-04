@@ -48,10 +48,7 @@ public class Pantalla_verificacion extends AppCompatActivity {
         txtcodigo = (TextInputEditText) findViewById(R.id.txtcodigo);
         btnreenviar = (MaterialButton) findViewById(R.id.btnlogin);
         btnverificarcodigo = (MaterialButton) findViewById(R.id.btnverificarcodigo);
-        //para mostar elcodgo que trae
-       // SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        //String savedCodVerificacion = sharedPreferences.getString("codVerificacion", "");
-       // showAlert("Codigo", savedCodVerificacion);
+
 
         btnverificarcodigo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,15 +206,7 @@ public class Pantalla_verificacion extends AppCompatActivity {
                                         }else{
                                             showAlert("Error", "El código de verificación no es válido.");
                                         }
-                                       // String codVerificacion = data.getString("codVerificacion");
 
-                                        // Verificar si el código de verificación es válido
-                                        //if (codVerificacion != null && !codVerificacion.equals("")) {
-                                          //  showAlert("Éxito", "Código verificado correctamente: " + codVerificacion);
-                                            // Realizar otras acciones según sea necesario
-                                        //} else {
-                                          //  showAlert("Error", "El código de verificación no es válido.");
-                                        //}
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                         showAlert("Error", "La respuesta del servidor no contiene información de verificación: " + e.toString());

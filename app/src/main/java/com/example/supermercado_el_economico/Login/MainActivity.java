@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private TextInputEditText txtpasswordEntrada;
     private MaterialButton btnentrar, btnCrear, btnestablecer;
 
+    private boolean doubleBackToExitPressedOnce = false; //para salir dela app
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +59,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = txtcorreoEn.getText().toString().trim();
                 String password = txtpasswordEntrada.getText().toString().trim();
-                //  loginUsuario(username, password);
-                // loginUsuario("keyla.soriano", "12345");
+
 
                 // Validar que los campos no estén vacíos
                 if (TextUtils.isEmpty(username)) {
@@ -99,8 +99,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-
     private void loginUsuario(final String username, final String password) {
         // Crear un diálogo de progreso mientras se realiza la solicitud de inicio de sesión
         ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
@@ -145,6 +143,9 @@ public class MainActivity extends AppCompatActivity {
                                                 .setTitle("Inicio de sesión exitoso")
                                                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                                                     public void onClick(DialogInterface dialog, int id) {
+                                                        // Limpiar los campos de usuario y contraseña
+                                                        txtcorreoEn.setText("");
+                                                        txtpasswordEntrada.setText("");
                                                         // Cerrar el diálogo o realizar alguna acción adicional si es necesario
                                                         dialog.dismiss();
                                                         // Iniciar la actividad correspondiente después de mostrar el mensaje de bienvenida
@@ -224,5 +225,21 @@ public class MainActivity extends AppCompatActivity {
                 requestQueue.add(jsonObjectRequest);
             }
         }).start();
+    }
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Presiona nuevamente para salir", Toast.LENGTH_SHORT).show();
+
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }
