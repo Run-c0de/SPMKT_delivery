@@ -1,19 +1,20 @@
 package com.example.supermercado_el_economico.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.supermercado_el_economico.CarritoActivity;
 import com.example.supermercado_el_economico.R;
+import com.example.supermercado_el_economico.SharedPreferencesHelper;
 import com.example.supermercado_el_economico.models.Producto;
 import com.bumptech.glide.Glide;
 
@@ -23,12 +24,12 @@ import java.util.List;
 public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.ProductoViewHolder> {
 
     private List<Producto> listaProductos;
-    private List<Producto> productosSeleccionados; // Lista para almacenar productos seleccionados
+    private List<Producto> productosSeleccionados;
     private Context context;
 
     public ProductosAdapter(List<Producto> listaProductos) {
         this.listaProductos = listaProductos;
-        this.productosSeleccionados = new ArrayList<>(); // Inicializar la lista de productos seleccionados
+        this.productosSeleccionados = new ArrayList<>();
     }
 
     @NonNull
@@ -40,7 +41,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.Prod
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductoViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ProductoViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Producto producto = listaProductos.get(position);
         Glide.with(context)
                 .load(producto.getFoto())
@@ -51,12 +52,31 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.Prod
         holder.buttonAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Producto productoSeleccionado = listaProductos.get(holder.getAdapterPosition());
-                productosSeleccionados.add(productoSeleccionado);
-                Intent intent = new Intent(context, CarritoActivity.class);
-                intent.putExtra("productos_seleccionados", new ArrayList<>(productosSeleccionados));
-                context.startActivity(intent);
-            }
+                Producto productoSeleccionado = listaProductos.get(position);
+
+                List<Producto> productosGuardados = SharedPreferencesHelper.loadProductos(context);
+
+                boolean alreadyAdded = false;
+                for (Producto producto : productosGuardados) {
+                    if (producto.getProductoId() == productoSeleccionado.getProductoId()) {
+                        alreadyAdded = true;
+                        producto.setCantidad(producto.getCantidad() + 1);
+                        break;
+                    }
+                }
+
+
+                if (!alreadyAdded) {
+                    productosGuardados.add(productoSeleccionado);
+                }
+
+                SharedPreferencesHelper.saveProductos(context, productosGuardados);
+                //Toast.makeText(context, "Producto agregado al carrito", Toast.LENGTH_SHORT).show();
+
+                    //SharedPreferencesHelper.clearSharedPreferences(context);
+
+                }
+
         });
     }
 
@@ -77,7 +97,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.Prod
             imageViewProduct = itemView.findViewById(R.id.imageViewProduct);
             textViewProductName = itemView.findViewById(R.id.textViewProductName);
             textViewPriceReal = itemView.findViewById(R.id.textViewPriceReal);
-            textViewIVS = itemView.findViewById(R.id.textViewIVS);
+            textViewIVS = itemView.findViewById(R.id.textViewISV);
             buttonAddToCart = itemView.findViewById(R.id.buttonAddToCart);
         }
     }

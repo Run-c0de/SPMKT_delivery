@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import java.net.URL;
 public class Home extends AppCompatActivity {
 
     private LinearLayout layout;
+    Button BtnCarrito;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +43,16 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         layout = findViewById(R.id.layout);
-
+        Button BtnCarrito = findViewById(R.id.BtnCarrito);
         new FetchCategoriesTask().execute("https://delivery-service.azurewebsites.net/api/Categorias");
+
+        BtnCarrito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this, CarritoActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private class FetchCategoriesTask extends AsyncTask<String, Void, String> {

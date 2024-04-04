@@ -17,16 +17,6 @@ public class HomeRepartidor extends AppCompatActivity {
         setContentView(R.layout.activity_home_repartidor);
 
 
-        ImageButton btnRepartidor = findViewById(R.id.btnRepartidor);
 
-
-        btnRepartidor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Abre la actividad Lacteos
-                Intent intent = new Intent(HomeRepartidor.this, PerfilRepartidor.class);
-                startActivity(intent);
-            }
-        });
     }
 }

@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="247dp"
-        android:layout_height="128dp"
+        android:layout_width="410dp"
+        android:layout_height="130dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.024"
@@ -64,19 +64,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.54"
         app:strokeWidth="2dp" />
-
-    <ImageButton
-        android:id="@+id/btnRepartidor"
-        android:layout_width="147dp"
-        android:layout_height="128dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.996"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.001"
-        tools:ignore="SpeakableTextPresentCheck"
-        tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
         android:id="@+id/imageView8"

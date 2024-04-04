@@ -39,13 +39,13 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:iconifiedByDefault="false"
-        android:queryHint="Buscar en el carrito" />
+        android:queryHint="Buscar el Producto" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"
         android:layout_width="match_parent"
-        android:layout_height="576dp" />
+        android:layout_height="609dp" />
 
 
 </LinearLayout>
