@@ -35,6 +35,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.supermercado_el_economico.Config.RestApiMethods;
 import com.example.supermercado_el_economico.Config.User;
+import com.example.supermercado_el_economico.Login.MainActivity;
+import com.example.supermercado_el_economico.Login.Pantalla_verificacion;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -56,7 +58,7 @@ public class registro_user extends AppCompatActivity {
     static final int ACCESS_CAMERA = 101;
 
 
-    private TextInputEditText nombre, apellido, telefono, direccion, correo, usuarios, pass;
+    private TextInputEditText nombre, apellido, telefono, direccion, correo, usuarios, pass, confiPass;
 
     String FotoPath;
     ImageView imageView;
@@ -81,6 +83,7 @@ public class registro_user extends AppCompatActivity {
         correo = findViewById(R.id.txtCorreo);
         usuarios = findViewById(R.id.txtUsuario);
         pass = findViewById(R.id.txtPass);
+        confiPass = findViewById(R.id.txtConfirmarPass);
 
 
         btnFoto.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +103,7 @@ public class registro_user extends AppCompatActivity {
         btnSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               validarDatos();
+                validarDatos();
             }
         });
 
@@ -110,27 +113,37 @@ public class registro_user extends AppCompatActivity {
 
     //VALIDA QUE QUEDEN CAMPOS VACIOS
     private void validarDatos() {
-        if (nombre.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(), "Debe de escribir un nombre", Toast.LENGTH_LONG).show();
+        btnSiguiente.setEnabled(false);
+        if(!confiPass.getText().toString().equals(pass.getText().toString())){
+            showAlert("Advertencia", "La contraseña no coincide");
+        } else if (nombre.getText().toString().equals("")) {
+            showAlert("Datos Inválido", "Debe de escribir su nombre");
         } else if (apellido.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(), "Debe de escribir un apellido", Toast.LENGTH_LONG).show();
+            showAlert("Datos Inválido", "Debe de escribir sus apellidos");
         } else if (telefono.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(), "Debe de escribir un telefono", Toast.LENGTH_LONG).show();
+            showAlert("Datos Inválido", "Debe de escribir su telefono");
         } else if (direccion.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(), "Debe de escribir una direccion", Toast.LENGTH_LONG).show();
+            showAlert("Datos Inválido", "Debe de escribir su direccion");
         } else if (correo.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(), "Debe de escribir un correo", Toast.LENGTH_LONG).show();
+            showAlert("Datos Inválido", "Debe de escribir su correo");
         } else if (usuarios.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(), "Debe de escribir un usuario", Toast.LENGTH_LONG).show();
+            showAlert("Datos Inválido", "Debe de escribir un usuario");
         } else if (pass.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(), "Debe de escribir un password", Toast.LENGTH_LONG).show();
+            showAlert("Datos Inválido", "Debe de escribir su contraseña");
         } else {
+            showAlert("Exito", "Datos correctos para guardar");
             SendData();
         }
+        btnSiguiente.setEnabled(true);
     }
 
 
     private void SendData() {
+        ProgressDialog progressDialog = new ProgressDialog(registro_user.this);
+        progressDialog.setMessage("Creando...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -145,13 +158,12 @@ public class registro_user extends AppCompatActivity {
                 usuario.setCorreo(correo.getText().toString());
                 usuario.setUsuario(usuarios.getText().toString());
                 usuario.setPass(pass.getText().toString());
-                usuario.setFoto("");
+                usuario.setFoto(ConvertImageBase64(FotoPath));
                 usuario.setVerificado(false);
                 usuario.setActivo(true);
 
                 JSONObject requestBody = new JSONObject();
                 try{
-                    requestBody.put("usuarioId", usuario.getUsuarioId());
                     requestBody.put("usuario", usuario.getUsuario());
                     requestBody.put("password", usuario.getPass());
                     requestBody.put("nombres", usuario.getNombre());
@@ -159,10 +171,22 @@ public class registro_user extends AppCompatActivity {
                     requestBody.put("telefono", usuario.getTelefono());
                     requestBody.put("direccion", usuario.getDireccion());
                     requestBody.put("correo", usuario.getCorreo());
-                    requestBody.put("foto", usuario.getFoto());
-                    // Agregar el campo "verificado" al objeto JSON
-                    requestBody.put("verificado", usuario.isVerificado());
-                    requestBody.put("activo", usuario.isActivo());
+                    requestBody.put("foto", "");
+                    requestBody.put("imgBase64", usuario.getFoto());
+                    requestBody.put("esRepartidor", false);
+
+                    /*requestBody.put("usuarioId", 0);
+                    requestBody.put("usuario", "zeus");
+                    requestBody.put("password","123");
+                    requestBody.put("nombres", "dios");
+                    requestBody.put("apellidos", "cielo");
+                    requestBody.put("telefono", "4848448");
+                    requestBody.put("direccion", "sps");
+                    requestBody.put("correo", "correo");
+                    requestBody.put("foto", "");
+                    requestBody.put("imgBase64", usuario.getFoto());
+                    requestBody.put("esRepartidor", false);
+                    requestBody.put("activo", usuario.isActivo());*/
                 }
                 catch (JSONException e){
                     e.printStackTrace();
@@ -173,15 +197,20 @@ public class registro_user extends AppCompatActivity {
 
                             @Override
                             public void onResponse(JSONObject response) {
+                                btnSiguiente.setEnabled(true);
+                                progressDialog.dismiss();
                                 try{
                                     JSONObject dataObject = response.getJSONObject("data");
                                     int userId =  dataObject.getInt("usuarioId");
-                                    Log.i("error", response.toString());
+
                                     if(userId > 0){
                                         showAlert("Exito", "Se ha creado con exito el usuario");
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(intent);
                                     }else{
                                         showAlert("Advertencia", "No se creo el usuario");
                                     }
+
                                 }
                                 catch (JSONException e){
                                     e.printStackTrace();
@@ -192,7 +221,8 @@ public class registro_user extends AppCompatActivity {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.i("error", error.toString());
+                                btnSiguiente.setEnabled(true);
+                                progressDialog.dismiss();
                                 String errorResponse = new String(error.networkResponse.data);
                                 try{
                                     JSONObject jsonObjectError = new JSONObject(errorResponse);
@@ -244,7 +274,8 @@ public class registro_user extends AppCompatActivity {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
         byte[] imagearray = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(imagearray, Base64.DEFAULT);
+        String base64Fotografia = Base64.encodeToString(imagearray, Base64.DEFAULT);
+        return "data:image/png;base64," + base64Fotografia;
 
     }
 
