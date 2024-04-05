@@ -4,5 +4,5 @@ public class RestApiMethods {
 
 
 
-    public static final String EndPointCreatePerson = "https://delivery-service.azurewebsites.net/api/Usuarios";
+    public static final String EndPointCreatePerson = "https://delivery-service.azurewebsites.net/api/usuarios";
 }

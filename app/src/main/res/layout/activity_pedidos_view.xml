@@ -24,7 +24,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvPedidoNumero1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,20 +58,24 @@
                 android:orientation="horizontal"
                 android:gravity="end">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnVerUbicacion1"
                     android:layout_width="wrap_content"
+                    android:layout_marginRight="30dp"
                     android:layout_height="wrap_content"
+                    android:textColor="#000"
                     android:text="Ver Ubicacion"
                     android:backgroundTint="@color/green"/>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnCompletar1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Completar"
                     android:backgroundTint="@color/blue"/>
             </LinearLayout>
+
+
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -87,4 +91,6 @@
         app:itemTextAppearanceInactive="?android:attr/textAppearanceMedium"
         app:itemTextColor="#0A0000"
         app:menu="@menu/bottom_navigation_menu" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

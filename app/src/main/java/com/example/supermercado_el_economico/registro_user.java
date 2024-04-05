@@ -193,29 +193,25 @@ public class registro_user extends AppCompatActivity {
                 }
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                         RestApiMethods.EndPointCreatePerson, requestBody,
-                        new Response.Listener<JSONObject>() {
+                        response -> {
+                            btnSiguiente.setEnabled(true);
+                            progressDialog.dismiss();
+                            try{
+                                JSONObject dataObject = response.getJSONObject("data");
+                                int userId =  dataObject.getInt("usuarioId");
 
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                btnSiguiente.setEnabled(true);
-                                progressDialog.dismiss();
-                                try{
-                                    JSONObject dataObject = response.getJSONObject("data");
-                                    int userId =  dataObject.getInt("usuarioId");
-
-                                    if(userId > 0){
-                                        showAlert("Exito", "Se ha creado con exito el usuario");
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        startActivity(intent);
-                                    }else{
-                                        showAlert("Advertencia", "No se creo el usuario");
-                                    }
-
+                                if(userId > 0){
+                                    showAlert("Exito", "Se ha creado con exito el usuario");
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(intent);
+                                }else{
+                                    showAlert("Advertencia", "No se creo el usuario");
                                 }
-                                catch (JSONException e){
-                                    e.printStackTrace();
-                                    showAlert("Error", e.getMessage().toString());
-                                }
+
+                            }
+                            catch (JSONException e){
+                                e.printStackTrace();
+                                showAlert("Error", e.getMessage().toString());
                             }
                         },
                         new Response.ErrorListener() {
