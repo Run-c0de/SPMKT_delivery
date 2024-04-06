@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private TextInputEditText txtpasswordEntrada;
     private MaterialButton btnentrar, btnCrear, btnestablecer;
 
+    private SessionManager session;
+
     private boolean doubleBackToExitPressedOnce = false; //para salir dela app
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         btnentrar = (MaterialButton) findViewById(R.id.btnlogin);
         btnCrear = (MaterialButton) findViewById(R.id.btnCrear);
         btnestablecer = (MaterialButton) findViewById(R.id.btnrestablecer);
+
+        session = new SessionManager(getApplicationContext());
 
         btnentrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,10 +124,10 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(com.android.volley.Request.Method.POST,
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                         "https://delivery-service.azurewebsites.net/api/Autenticacion/Login", requestBody,
 
-                        new com.android.volley.Response.Listener<JSONObject>() {
+                        new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                                 progressDialog.dismiss(); // Ocultar el diálogo de progreso
@@ -152,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
                                                         if (codVerificacion.equals("")) {
                                                             if (rol.equals("Cliente")) {
                                                                 Intent intent = new Intent(getApplicationContext(), Home.class);
+                                                                //guardar datos de login
+                                                                session.login(String.valueOf(userId), username);
                                                                 startActivity(intent);
                                                             } else if (rol.equals("Repartidor")) {
                                                                 Intent intent = new Intent(getApplicationContext(), HomeRepartidor.class);
