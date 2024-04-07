@@ -1,30 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Home">
 
-    <ImageView
-        android:id="@+id/imageViewBackground"
-        android:layout_width="265dp"
-        android:layout_height="130dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/logo_oficial"
-        app:layout_constraintBottom_toTopOf="@id/scrollView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="407dp"
-        android:layout_height="603dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="55dp"
+        android:layout_marginBottom="55dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageViewBackground">
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:id="@+id/layout"
@@ -39,15 +29,23 @@
         </LinearLayout>
 
     </ScrollView>
+    <!-- Barra de aplicaciones -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="Home"
+        app:menu="@menu/menu_carrito"
+        android:background="?android:attr/colorActivatedHighlight"/>
 
-    <ImageButton
-        android:id="@+id/btnuser"
-        android:layout_width="133dp"
-        android:layout_height="132dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageViewBackground"
-        tools:layout_editor_absoluteY="0dp"
-        tools:srcCompat="@tools:sample/avatars" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?android:attr/colorActivatedHighlight"
+        app:itemTextAppearanceActive="?android:attr/textAppearanceMedium"
+        app:itemTextAppearanceInactive="?android:attr/textAppearanceMedium"
+        app:itemTextColor="#0A0000"
+        app:menu="@menu/bottom_navigation_menu" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

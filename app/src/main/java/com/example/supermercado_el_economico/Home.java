@@ -6,14 +6,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -29,6 +31,9 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.supermercado_el_economico.ApiRest.RestApiMethods;
 import com.example.supermercado_el_economico.Login.SessionManager;
+import com.example.supermercado_el_economico.Shop.CustomerAddress;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,19 +58,54 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         layout = findViewById(R.id.layout);
-        ImageButton btnuser = findViewById(R.id.btnuser);
+        //ImageButton btnuser = findViewById(R.id.btnuser);
         new FetchCategoriesTask().execute("https://delivery-service.azurewebsites.net/api/Categorias");
-
-        btnuser.setOnClickListener(new View.OnClickListener() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
+        /*btnuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Home.this,  Userlogin.class);
                 startActivity(intent);
             }
+        });*/
+        MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
+
+        topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.action_profile_photo) {
+                    Intent intent = new Intent(Home.this, Userlogin.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
         });
 
     }
 
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    int itemId = item.getItemId();
+                    if(itemId == R.id.page_1){
+                        Intent intent = new Intent(getApplicationContext(), Home.class);
+                        startActivity(intent);
+                    }
+                    else if(itemId == R.id.page_2){
+                        Intent intent = new Intent(getApplicationContext(), HistorialPedidoActivity.class);
+                        startActivity(intent);
+                    }
+                    else if(itemId == R.id.page_3){
+                        Intent intent = new Intent(getApplicationContext(), CustomerAddress.class);
+                        startActivity(intent);
+                    }
+                    return true;
+                }
+            };
 
 
     private class FetchCategoriesTask extends AsyncTask<String, Void, String> {

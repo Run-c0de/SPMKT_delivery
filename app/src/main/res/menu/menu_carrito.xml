@@ -3,12 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_username"
-        android:title="User"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/action_profile_photo"
         android:title="Foto"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:icon="@drawable/ic_username" />
 </menu>
