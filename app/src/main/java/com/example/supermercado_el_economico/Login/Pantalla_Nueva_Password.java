@@ -1,8 +1,6 @@
 package com.example.supermercado_el_economico.Login;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,25 +8,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.supermercado_el_economico.Home;
-import com.example.supermercado_el_economico.Login.MainActivity;
 import com.example.supermercado_el_economico.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
-
 public class Pantalla_Nueva_Password extends AppCompatActivity {
     // Variables para los componentes de Material Design
     private TextInputEditText txtpassNew, txtpassVeriNew, txtPassTemporal;
@@ -37,12 +29,10 @@ public class Pantalla_Nueva_Password extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_nueva_password);
-
         txtpassNew =(TextInputEditText) findViewById(R.id.txtpassNew);
         txtpassVeriNew =(TextInputEditText) findViewById(R.id.txtpassVeriNew);
         txtPassTemporal =(TextInputEditText) findViewById(R.id.txtPassTemporal);
         btncanbiarcont =(MaterialButton) findViewById(R.id.btnCambiarContra);
-
 
         btncanbiarcont.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,9 +87,7 @@ public class Pantalla_Nueva_Password extends AppCompatActivity {
                 }
             }
         });
-
     }
-
     private void reestablecerPassword(Integer userId, String password){
         ProgressDialog progressDialog = new ProgressDialog(Pantalla_Nueva_Password.this);
         progressDialog.setMessage("Reestableciendo...");
@@ -108,9 +96,7 @@ public class Pantalla_Nueva_Password extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
                 RequestQueue requestQueue = Volley.newRequestQueue(Pantalla_Nueva_Password.this);
-
                 JSONObject requestBody = new JSONObject();
                 try {
                     requestBody.put("userId", userId);
@@ -118,12 +104,9 @@ public class Pantalla_Nueva_Password extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(com.android.volley.Request.Method.PUT,
                         "https://delivery-service.azurewebsites.net/api/Autenticacion/ReestablecerPassword?password="+password+"&userId="+userId, requestBody,
                         //"https://delivery-service.azurewebsites.net/api/Autenticacion/EnviarClaveTemporal?usuario="+username, requestBody,
-
                         new com.android.volley.Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -139,7 +122,6 @@ public class Pantalla_Nueva_Password extends AppCompatActivity {
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                    // Toast.makeText(getApplicationContext(), "Error al procesar la respuesta del servidor", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }, new Response.ErrorListener() {
@@ -172,7 +154,6 @@ public class Pantalla_Nueva_Password extends AppCompatActivity {
             }
         }).start();
     }
-
     private void showAlert(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title)

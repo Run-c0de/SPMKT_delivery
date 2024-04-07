@@ -1,39 +1,29 @@
 package com.example.supermercado_el_economico.Login;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.supermercado_el_economico.Delivery.HomeRepartidor;
-import com.example.supermercado_el_economico.Home;
 import com.example.supermercado_el_economico.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class Restablecer_contra extends AppCompatActivity {
-
     // Variables para los componentes de Material Design
     private TextInputEditText txtCorreoRe;
-
     private MaterialButton btnenviartocket;
     ProgressDialog progressDialogEnvioToken;
     @Override
@@ -42,8 +32,6 @@ public class Restablecer_contra extends AppCompatActivity {
         setContentView(R.layout.activity_restablecer_contra);
         txtCorreoRe =(TextInputEditText) findViewById(R.id.txtCorreoRecu);
         btnenviartocket =(MaterialButton) findViewById(R.id.btnenviarT);
-
-
         btnenviartocket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,13 +42,11 @@ public class Restablecer_contra extends AppCompatActivity {
             }
         });
     }
-
     private void enviarSolicitudRestablecer(String username) {
        // showDialog("Enviando...");
         new Thread(new Runnable() {
             @Override
             public void run() {
-
                 RequestQueue requestQueue = Volley.newRequestQueue(Restablecer_contra.this);
 
                 JSONObject requestBody = new JSONObject();
@@ -70,7 +56,6 @@ public class Restablecer_contra extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 //showDialog("Enviando clave temporal...");
-
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(com.android.volley.Request.Method.POST,
                         "https://delivery-service.azurewebsites.net/api/Autenticacion/EnviarClaveTemporal?usuario="+username, requestBody,
 
@@ -129,7 +114,6 @@ public class Restablecer_contra extends AppCompatActivity {
             }
         }).start();
     }
-
     private boolean validar() {
         String correo = txtCorreoRe.getText().toString().trim();
         if (correo.isEmpty()) {
@@ -147,7 +131,6 @@ public class Restablecer_contra extends AppCompatActivity {
                 .create()
                 .show();
     }
-
     private void showDialog(String message) {
         progressDialogEnvioToken = new ProgressDialog(Restablecer_contra.this);
         progressDialogEnvioToken.setMessage(message);

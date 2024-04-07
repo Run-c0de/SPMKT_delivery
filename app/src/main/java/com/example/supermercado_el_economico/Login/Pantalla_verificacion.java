@@ -1,18 +1,13 @@
 package com.example.supermercado_el_economico.Login;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -21,27 +16,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.supermercado_el_economico.Delivery.HomeRepartidor;
 import com.example.supermercado_el_economico.Home;
-import com.example.supermercado_el_economico.Login.Pantalla_Nueva_Password;
 import com.example.supermercado_el_economico.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-
 import com.example.supermercado_el_economico.ApiRest.AuthenticationApiMethods;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
-
 public class Pantalla_verificacion extends AppCompatActivity {
     // Variables para los componentes de Material Design
     private TextInputEditText txtcodigo;
     private RequestQueue requestQueue;
     private MaterialButton btnreenviar, btnverificarcodigo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +37,6 @@ public class Pantalla_verificacion extends AppCompatActivity {
         txtcodigo = (TextInputEditText) findViewById(R.id.txtcodigo);
         btnreenviar = (MaterialButton) findViewById(R.id.btnlogin);
         btnverificarcodigo = (MaterialButton) findViewById(R.id.btnverificarcodigo);
-
-
         btnverificarcodigo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,28 +45,22 @@ public class Pantalla_verificacion extends AppCompatActivity {
                 verificarCodigo(); // Llama al método para verificar el código
             }
         });
-
         btnreenviar.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 final String username = sharedPreferences.getString("username", "");
                 final String pass = sharedPreferences.getString("password", "");
-
                 reenviarCodigo(username, pass);
             }
         });
     }
-
     private void reenviarCodigo(String username, String password) {
         ProgressDialog progressDialog = new ProgressDialog(Pantalla_verificacion.this);
         progressDialog.setMessage("Reenviando...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-
         requestQueue = Volley.newRequestQueue(this);
-
         JSONObject requestBody = new JSONObject();
         try {
             requestBody.put("userName", username);
@@ -102,9 +82,7 @@ public class Pantalla_verificacion extends AppCompatActivity {
                     String codVerificacion = dataObject.getString("codVerificacion");
                     String username = dataObject.getString("username");
                     String rol = dataObject.getString("rol");
-
                     if (status == 200) { // Inicio de sesión exitoso
-
                         if (!codVerificacion.equals("")) {
                             SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -114,7 +92,6 @@ public class Pantalla_verificacion extends AppCompatActivity {
 
                             showAlert("Código Verifiación", "Se ha reeviado código verificación.");
                         }
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -145,7 +122,6 @@ public class Pantalla_verificacion extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(request);
     }
-
     private void verificarCodigo() {
         ProgressDialog progressDialog = new ProgressDialog(Pantalla_verificacion.this);
         progressDialog.setMessage("Verificando código...");
@@ -165,6 +141,7 @@ public class Pantalla_verificacion extends AppCompatActivity {
         if (!codigoIngresado.equals(codigoguardado)) {
             progressDialog.dismiss(); // Ocultar el diálogo de progreso
             showAlert("Error", "El código ingresado no es correcto.");
+            txtcodigo.setText(""); // Limpiar el campo de texto
             //return; // Salir del método sin continuar con la verificación en el servidor
         }else{
             // El código ingresado es correcto, proceder con la verificación en el servidor
@@ -179,7 +156,6 @@ public class Pantalla_verificacion extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT,
                             "https://delivery-service.azurewebsites.net/api/Autenticacion/VerificarUsuario?usuarioId=" + userId, requestBody,
                             new Response.Listener<JSONObject>() {
@@ -221,15 +197,11 @@ public class Pantalla_verificacion extends AppCompatActivity {
                             return headers;
                         }
                     };
-
                     requestQueue.add(jsonObjectRequest);
                 }
             }).start();
         }
-
-
     }
-
     // Método para mostrar un diálogo de alerta con un título y un mensaje
     private void showAlert(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

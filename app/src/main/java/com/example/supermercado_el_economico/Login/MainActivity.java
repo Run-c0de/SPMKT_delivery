@@ -1,8 +1,6 @@
 package com.example.supermercado_el_economico.Login;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +9,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,10 +24,8 @@ import com.example.supermercado_el_economico.R;
 import com.example.supermercado_el_economico.registro_user;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 public class MainActivity extends AppCompatActivity {
     // Variables para los componentes de Material Design
@@ -39,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private MaterialButton btnentrar, btnCrear, btnestablecer;
     private RequestQueue requestQueue;
     private SessionManager session;
-
     private boolean doubleBackToExitPressedOnce = false; //para salir dela app
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +45,12 @@ public class MainActivity extends AppCompatActivity {
         btnentrar = (MaterialButton) findViewById(R.id.btnlogin);
         btnCrear = (MaterialButton) findViewById(R.id.btnCrear);
         btnestablecer = (MaterialButton) findViewById(R.id.btnrestablecer);
-
         session = new SessionManager(getApplicationContext());
-
         btnentrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = txtcorreoEn.getText().toString().trim();
                 String password = txtpasswordEntrada.getText().toString().trim();
-
-
                 // Validar que los campos no estén vacíos
                 if (TextUtils.isEmpty(username)) {
                     txtcorreoEn.setError("Campo obligatorio");
@@ -68,20 +58,16 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     txtcorreoEn.setError(null);
                 }
-
                 if (TextUtils.isEmpty(password)) {
                     txtpasswordEntrada.setError("Campo obligatorio");
                     return;
                 } else {
                     txtpasswordEntrada.setError(null);
                 }
-
                 // Aquí puedes llamar a tu método de inicio de sesión
                 loginUsuario(username, password);
-
             }
         });
-
         btnestablecer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,7 +161,6 @@ public class MainActivity extends AppCompatActivity {
                         dialog.show();
                     }
                 }catch (Exception ex){
-
                 }
             }
         }, new Response.ErrorListener() {
