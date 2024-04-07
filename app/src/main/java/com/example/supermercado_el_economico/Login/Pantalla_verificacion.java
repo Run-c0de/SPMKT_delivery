@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -38,7 +39,7 @@ import java.util.Map;
 public class Pantalla_verificacion extends AppCompatActivity {
     // Variables para los componentes de Material Design
     private TextInputEditText txtcodigo;
-
+    private RequestQueue requestQueue;
     private MaterialButton btnreenviar, btnverificarcodigo;
 
     @Override
@@ -78,83 +79,71 @@ public class Pantalla_verificacion extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        new Thread(new Runnable() {
+        requestQueue = Volley.newRequestQueue(this);
+
+        JSONObject requestBody = new JSONObject();
+        try {
+            requestBody.put("userName", username);
+            requestBody.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
+                AuthenticationApiMethods.EndPointLogin,  requestBody, new Response.Listener<JSONObject>() {
             @Override
-            public void run() {
-
-                RequestQueue requestQueue = Volley.newRequestQueue(Pantalla_verificacion.this);
-
-                JSONObject requestBody = new JSONObject();
+            public void onResponse(JSONObject response) {
+                progressDialog.dismiss(); // Ocultar el diálogo de progreso
                 try {
-                    requestBody.put("userName", username);
-                    requestBody.put("password", password);
+                    JSONObject dataObject = response.getJSONObject("data");
+                    int userId = dataObject.getInt("userId");
+                    String message = dataObject.getString("message");
+                    int status = dataObject.getInt("status");
+                    String codVerificacion = dataObject.getString("codVerificacion");
+                    String username = dataObject.getString("username");
+                    String rol = dataObject.getString("rol");
+
+                    if (status == 200) { // Inicio de sesión exitoso
+
+                        if (!codVerificacion.equals("")) {
+                            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("codVerificacion", codVerificacion);
+                            editor.putInt("userId", userId);
+                            editor.apply();
+
+                            showAlert("Código Verifiación", "Se ha reeviado código verificación.");
+                        }
+
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    // Toast.makeText(getApplicationContext(), "Error al procesar la respuesta del servidor", Toast.LENGTH_SHORT).show();
                 }
-
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(com.android.volley.Request.Method.POST,
-                        "https://delivery-service.azurewebsites.net/api/Autenticacion/Login", requestBody,
-
-                        new com.android.volley.Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                progressDialog.dismiss(); // Ocultar el diálogo de progreso
-                                try {
-                                    JSONObject dataObject = response.getJSONObject("data");
-                                    int userId = dataObject.getInt("userId");
-                                    String message = dataObject.getString("message");
-                                    int status = dataObject.getInt("status");
-                                    String codVerificacion = dataObject.getString("codVerificacion");
-                                    String username = dataObject.getString("username");
-                                    String rol = dataObject.getString("rol");
-
-                                    if (status == 200) { // Inicio de sesión exitoso
-
-                                        if (!codVerificacion.equals("")) {
-                                            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                                            editor.putString("codVerificacion", codVerificacion);
-                                            editor.putInt("userId", userId);
-                                            editor.apply();
-
-                                            showAlert("Código Verifiación", "Se ha reeviado código verificación.");
-                                        }
-
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                    // Toast.makeText(getApplicationContext(), "Error al procesar la respuesta del servidor", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressDialog.dismiss(); // Ocultar el diálogo de progreso
-                        // Manejar el fallo de la solicitud de inicio de sesión
-                        AlertDialog.Builder builder = new AlertDialog.Builder(Pantalla_verificacion.this);
-                        builder.setMessage("Usuario o contraseña incorrectos.")
-                                .setTitle("Error de inicio de sesión")
-                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        // Cerrar el diálogo o realizar alguna acción adicional si es necesario
-                                        dialog.dismiss();
-                                    }
-                                });
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }
-                }) {
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        Map<String, String> headers = new HashMap<>();
-                        headers.put("Content-Type", "application/json");
-                        return headers;
-                    }
-                };
-
-                requestQueue.add(jsonObjectRequest);
             }
-        }).start();
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss(); // Ocultar el diálogo de progreso
+                // Manejar el fallo de la solicitud de inicio de sesión
+                AlertDialog.Builder builder = new AlertDialog.Builder(Pantalla_verificacion.this);
+                builder.setMessage("Usuario o contraseña incorrectos.")
+                        .setTitle("Error de inicio de sesión")
+                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // Cerrar el diálogo o realizar alguna acción adicional si es necesario
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(request);
     }
 
     private void verificarCodigo() {
