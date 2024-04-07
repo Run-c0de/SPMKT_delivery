@@ -1,6 +1,8 @@
 package com.example.supermercado_el_economico;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,15 +13,26 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.example.supermercado_el_economico.ApiRest.RestApiMethods;
+import com.example.supermercado_el_economico.Login.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,15 +48,25 @@ import java.net.URL;
 public class Home extends AppCompatActivity {
 
     private LinearLayout layout;
+<<<<<<< Updated upstream
 
 
+=======
+    Button BtnCarrito, btnperfil;
+    private SessionManager session;
+    private RequestQueue requestQueue;
+>>>>>>> Stashed changes
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
         layout = findViewById(R.id.layout);
+<<<<<<< Updated upstream
         ImageButton btnuser = findViewById(R.id.btnuser);
+=======
+        Button BtnCarrito = findViewById(R.id.BtnCarrito);
+>>>>>>> Stashed changes
 
         new FetchCategoriesTask().execute("https://delivery-service.azurewebsites.net/api/Categorias");
 
@@ -103,6 +126,59 @@ public class Home extends AppCompatActivity {
         }
     }
 
+    private void ActualizarPerfil(){
+        session = new SessionManager(getApplicationContext());
+        requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
+                RestApiMethods.EndPointCreatePerson + "/" + session.getUserId().toString(), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject dataObject = response.getJSONObject("data");
+                            int _usuarioId = dataObject.getInt("usuarioId");
+                            String _usuario = dataObject.getString("usuario");
+                            String _nombres = dataObject.getString("nombres");
+                            String _apellidos = dataObject.getString("apellidos");
+                            String _telefono = dataObject.getString("telefono");
+                            String _direccion = dataObject.getString("direccion");
+                            String _correo = dataObject.getString("correo");
+                            String _foto = dataObject.getString("foto");
+                            boolean _verificado = dataObject.getBoolean("verificado");
+
+                            Intent intent = new Intent(Home.this, registro_user.class);
+                            intent.putExtra("usuarioId", _usuarioId);
+                            intent.putExtra("usuario", _usuario);
+                            intent.putExtra("nombres", _nombres);
+                            intent.putExtra("apellidos", _apellidos);
+                            intent.putExtra("telefono", _telefono);
+                            intent.putExtra("direccion", _direccion);
+                            intent.putExtra("correo", _correo);
+                            intent.putExtra("foto", _foto);
+                            intent.putExtra("verificado", _verificado);
+                            startActivity(intent);
+                        }catch (JSONException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
+                        builder.setTitle("Error")
+                                .setMessage("Ocurrio un error: " + error.getMessage().toString())
+                                .setPositiveButton("Aceptar", null)
+                                .create()
+                                .show();
+                    }
+                });
+            request.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(request);
+    }
     private void createImageButton(String imageUrl, String description, int categoryId) {
 
 

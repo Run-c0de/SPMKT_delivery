@@ -17,6 +17,8 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.util.Base64;
+import android.widget.TextView;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,8 +29,12 @@ import com.android.volley.toolbox.Volley;
 import com.example.supermercado_el_economico.ApiRest.RestApiMethods;
 import com.example.supermercado_el_economico.Config.User;
 import com.example.supermercado_el_economico.Login.MainActivity;
+import com.example.supermercado_el_economico.Login.SessionManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,8 +45,12 @@ public class registro_user extends AppCompatActivity {
     static final int peticion_camara = 100;
     private RequestQueue requestQueue;
     String imagenBase64;
+    Integer _usuarioId = 0;
     private TextInputEditText nombre, apellido, telefono, direccion, correo, usuarios, pass, confiPass;
+    private TextInputLayout passp, confiPassp;
+    boolean verificado = false;
     ImageView imageView;
+    TextView lbTitulo;
     private MaterialButton btnSiguiente, btnFoto;
 
     @Override
@@ -59,9 +69,41 @@ public class registro_user extends AppCompatActivity {
         correo = findViewById(R.id.txtCorreo);
         usuarios = findViewById(R.id.txtUsuario);
         pass = findViewById(R.id.txtPass);
+        passp = findViewById(R.id.txtPassp);
         confiPass = findViewById(R.id.txtConfirmarPass);
+        confiPassp = findViewById(R.id.txtConfirmarPassw);
+        lbTitulo = findViewById(R.id.textView);
 
+        Intent intent = getIntent();
+        if(intent.getExtras() != null){
+            pass.setVisibility(View.GONE);
+            confiPass.setVisibility(View.GONE);
+            passp.setVisibility(View.GONE);
+            confiPassp.setVisibility(View.GONE);
+            btnSiguiente.setText("Actualizar");
+            lbTitulo.setText("Actualizar Perfil");
+            usuarios.setEnabled(false);
 
+            _usuarioId = intent.getIntExtra("usuarioId", 0);
+            String _usuario = intent.getStringExtra("usuario");
+            String _nombres = intent.getStringExtra("nombres");
+            String _apellidos = intent.getStringExtra("apellidos");
+            String _telefono = intent.getStringExtra("telefono");
+            String _direccion = intent.getStringExtra("direccion");
+            String _correo = intent.getStringExtra("correo");
+            String _foto = intent.getStringExtra("foto");
+            boolean _verificado = intent.getBooleanExtra("verificado", false);
+
+            nombre.setText(_nombres);
+            apellido.setText(_apellidos);
+            telefono.setText(_telefono);
+            direccion.setText(_direccion);
+            correo.setText(_correo);
+            usuarios .setText(_usuario);
+            verificado = _verificado;
+
+            Picasso.get().load(_foto).into(imageView);
+        }
         btnFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +128,7 @@ public class registro_user extends AppCompatActivity {
     //VALIDA QUE QUEDEN CAMPOS VACIOS
     private void validarDatos() {
         btnSiguiente.setEnabled(false);
-        if(!confiPass.getText().toString().equals(pass.getText().toString())){
+        if(!confiPass.getText().toString().equals(pass.getText().toString()) && _usuarioId == 0){
             showAlert("Advertencia", "La contraseña no coincide");
         } else if (nombre.getText().toString().equals("")) {
             showAlert("Datos Inválido", "Debe de escribir su nombre");
@@ -98,9 +140,9 @@ public class registro_user extends AppCompatActivity {
             showAlert("Datos Inválido", "Debe de escribir su direccion");
         } else if (correo.getText().toString().equals("")) {
             showAlert("Datos Inválido", "Debe de escribir su correo");
-        } else if (usuarios.getText().toString().equals("")) {
+        } else if (usuarios.getText().toString().equals("") && _usuarioId == 0) {
             showAlert("Datos Inválido", "Debe de escribir un usuario");
-        } else if (pass.getText().toString().equals("")) {
+        } else if (pass.getText().toString().equals("") && _usuarioId == 0) {
             showAlert("Datos Inválido", "Debe de escribir su contraseña");
         } else {
             SendData();
@@ -111,12 +153,12 @@ public class registro_user extends AppCompatActivity {
 
     private void SendData() {
         ProgressDialog progressDialog = new ProgressDialog(registro_user.this);
-        progressDialog.setMessage("Creando...");
+        progressDialog.setMessage(_usuarioId == 0 ? "Creando..." : "Actualizando...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
         User usuario = new User();
-        usuario.setUsuarioId(0);
+        usuario.setUsuarioId(_usuarioId);
         usuario.setNombre(nombre.getText().toString());
         usuario.setApellido(apellido.getText().toString());
         usuario.setTelefono(telefono.getText().toString());
@@ -125,13 +167,14 @@ public class registro_user extends AppCompatActivity {
         usuario.setUsuario(usuarios.getText().toString());
         usuario.setPass(pass.getText().toString());
         usuario.setFoto(imagenBase64);
-        usuario.setVerificado(false);
+        usuario.setVerificado(verificado);
         usuario.setActivo(true);
 
         requestQueue = Volley.newRequestQueue(this);
 
         JSONObject requestBody = new JSONObject();
         try {
+            requestBody.put("usuarioId", _usuarioId);
             requestBody.put("usuario", usuario.getUsuario());
             requestBody.put("password", usuario.getPass());
             requestBody.put("nombres", usuario.getNombre());
@@ -147,30 +190,47 @@ public class registro_user extends AppCompatActivity {
             ex.printStackTrace();
         }
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
+        JsonObjectRequest request = new JsonObjectRequest(_usuarioId == 0 ? Request.Method.POST : Request.Method.PUT,
                 RestApiMethods.EndPointCreatePerson, requestBody, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     progressDialog.dismiss();
-                    JSONObject dataObject = response.getJSONObject("data");
-                    int userId =  dataObject.getInt("usuarioId");
-                    if(userId > 0){
+
+                    if(_usuarioId == 0){
+                        JSONObject dataObject = response.getJSONObject("data");
+                        int userId =  dataObject.getInt("usuarioId");
+                        if(userId > 0){
+                            AlertDialog.Builder alert = new AlertDialog.Builder(registro_user.this);
+                            alert.setMessage("Su cuenta ha sido creada exitosamente.")
+                                    .setTitle("¡Exito!")
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener(){
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                            startActivity(intent);
+                                        };
+                                    })
+                                    .create()
+                                    .show();
+                        }else{
+                            showAlert("Advertencia", "No se creo el usuario");
+                        }
+                        limpiarCampos();
+                    }else{
                         AlertDialog.Builder alert = new AlertDialog.Builder(registro_user.this);
-                        alert.setMessage("Su cuenta ha sido creada exitosamente.")
+                        alert.setMessage("Su cuenta ha sido actualizada exitosamente.")
                                 .setTitle("¡Exito!")
                                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener(){
                                     public void onClick(DialogInterface dialog, int id) {
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        Intent intent = new Intent(getApplicationContext(), Home.class);
                                         startActivity(intent);
                                     };
                                 })
                                 .create()
                                 .show();
-                    }else{
-                        showAlert("Advertencia", "No se creo el usuario");
                     }
-                    limpiarCampos();
+
+
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
