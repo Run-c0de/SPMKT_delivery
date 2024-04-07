@@ -112,6 +112,9 @@
         <activity
             android:name=".Shop.CustomerAddress"
             android:exported="false" />
+        <activity
+            android:name=".Shop.MapView"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
