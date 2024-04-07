@@ -148,17 +148,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else {
                         // Otro estado no manejado, muestra un mensaje genérico
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setMessage("Usuario o contraseña incorrectos.")
-                                .setTitle("Error de inicio de sesión")
-                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        // Cerrar el diálogo o realizar alguna acción adicional si es necesario
-                                        dialog.dismiss();
-                                    }
-                                });
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
+                        alertErrorInicioSesion();
                     }
                 }catch (Exception ex){
                 }
@@ -168,17 +158,7 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss(); // Ocultar el diálogo de progreso
                 // Manejar el fallo de la solicitud de inicio de sesión
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setMessage("Usuario o contraseña incorrectos.")
-                        .setTitle("Error de inicio de sesión")
-                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // Cerrar el diálogo o realizar alguna acción adicional si es necesario
-                                dialog.dismiss();
-                            }
-                        });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                alertErrorInicioSesion();
             }
         });
         request.setRetryPolicy(new DefaultRetryPolicy(
@@ -212,135 +192,20 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("password", password);
         editor.apply();
     }
-    /*private void loginUsuario(final String username, final String password) {
-        // Crear un diálogo de progreso mientras se realiza la solicitud de inicio de sesión
-        ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
-        progressDialog.setMessage("Iniciando sesión...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-
-                JSONObject requestBody = new JSONObject();
-                try {
-                    requestBody.put("userName", username);
-                    requestBody.put("password", password);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                        "https://delivery-service.azurewebsites.net/api/Autenticacion/Login", requestBody,
-
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                progressDialog.dismiss(); // Ocultar el diálogo de progreso
-                                try {
-                                    JSONObject dataObject = response.getJSONObject("data");
-                                    int userId = dataObject.getInt("userId");
-                                    String message = dataObject.getString("message");
-                                    int status = dataObject.getInt("status");
-                                    String codVerificacion = dataObject.getString("codVerificacion");
-                                    String username = dataObject.getString("username");
-                                    String rol = dataObject.getString("rol");
-
-                                    if (status == 200) { // Inicio de sesión exitoso
-                                        String welcomeMessage = "¡Bienvenido, " + username + "!";
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                                        builder.setMessage(welcomeMessage)
-                                                .setTitle("Inicio de sesión exitoso")
-                                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                        // Limpiar los campos de usuario y contraseña
-                                                        txtcorreoEn.setText("");
-                                                        txtpasswordEntrada.setText("");
-                                                        // Cerrar el diálogo o realizar alguna acción adicional si es necesario
-                                                        dialog.dismiss();
-                                                        // Iniciar la actividad correspondiente después de mostrar el mensaje de bienvenida
-                                                        if (codVerificacion.equals("")) {
-                                                            if (rol.equals("Cliente")) {
-                                                                Intent intent = new Intent(getApplicationContext(), Home.class);
-                                                                //guardar datos de login
-                                                                session.login(String.valueOf(userId), username);
-                                                                startActivity(intent);
-                                                            } else if (rol.equals("Repartidor")) {
-                                                                Intent intent = new Intent(getApplicationContext(), HomeRepartidor.class);
-                                                                startActivity(intent);
-                                                            }
-                                                        } else {
-                                                            // Guardar el código de verificación y el ID del usuario en SharedPreferences
-                                                            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                                                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                                                            editor.putString("codVerificacion", codVerificacion);
-                                                            editor.putInt("userId", userId);
-                                                            editor.putString("username", username);
-                                                            editor.putString("password", password);
-
-                                                            editor.apply();
-
-                                                            // Ir a la pantalla de verificación
-                                                            Intent intent = new Intent(getApplicationContext(), Pantalla_verificacion.class);
-                                                            startActivity(intent);
-
-                                                        }
-                                                    }
-                                                });
-                                        AlertDialog dialog = builder.create();
-                                        dialog.show();
-                                    } else {
-                                        // Otro estado no manejado, muestra un mensaje genérico
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                                        builder.setMessage("Usuario o contraseña incorrectos.")
-                                                .setTitle("Error de inicio de sesión")
-                                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                        // Cerrar el diálogo o realizar alguna acción adicional si es necesario
-                                                        dialog.dismiss();
-                                                    }
-                                                });
-                                        AlertDialog dialog = builder.create();
-                                        dialog.show();
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                    // Toast.makeText(getApplicationContext(), "Error al procesar la respuesta del servidor", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressDialog.dismiss(); // Ocultar el diálogo de progreso
-                        // Manejar el fallo de la solicitud de inicio de sesión
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setMessage("Usuario o contraseña incorrectos.")
-                                .setTitle("Error de inicio de sesión")
-                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        // Cerrar el diálogo o realizar alguna acción adicional si es necesario
-                                        dialog.dismiss();
-                                    }
-                                });
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
+    private void alertErrorInicioSesion(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage("Usuario o contraseña incorrectos.")
+                .setTitle("Error de inicio de sesión")
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Cerrar el diálogo o realizar alguna acción adicional si es necesario
+                        dialog.dismiss();
                     }
-                }) {
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        Map<String, String> headers = new HashMap<>();
-                        headers.put("Content-Type", "application/json");
-                        return headers;
-                    }
-                };
-
-                requestQueue.add(jsonObjectRequest);
-            }
-        }).start();
-    }*/
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
