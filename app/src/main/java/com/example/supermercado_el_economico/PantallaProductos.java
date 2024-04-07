@@ -1,10 +1,12 @@
 package com.example.supermercado_el_economico;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +30,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import android.widget.ImageButton;
 
 public class PantallaProductos extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -39,6 +42,7 @@ public class PantallaProductos extends AppCompatActivity {
         setContentView(R.layout.activity_pantalla_productos);
 
         Button btnatras = findViewById(R.id.btnatras);
+        ImageButton btncarrito = findViewById(R.id.btncarrito);
 
         recyclerView = findViewById(R.id.recyclerView2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -53,6 +57,17 @@ public class PantallaProductos extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PantallaProductos.this, Home.class);
+                startActivity(intent);
+            }
+        });
+
+        btncarrito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                Intent intent = new Intent(PantallaProductos.this, CarritoActivity.class);
                 startActivity(intent);
             }
         });

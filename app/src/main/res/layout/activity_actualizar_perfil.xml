@@ -1,130 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:boxStrokeColor="#F17A0A"
     tools:context=".ActualizarPerfil">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Actualizar mi Perfil"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:title="Actualizar mi Perfil"
+        app:titleTextColor="@color/white"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/placeholder_image"
+        app:shapeAppearanceOverlay="@style/MyShapeAppearanceOverlay.Circle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/nombre"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="15dp"
-        android:ems="10"
-        android:hint="@string/nombre"
-        android:inputType="text"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Nombre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <EditText
-        android:id="@+id/editTextText2"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/Apellido"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:ems="10"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:hint="Apellido"
-        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nombre"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <EditText
-        android:id="@+id/editTextText3"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/Teléfono"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:ems="10"
-        android:hint="telefono"
-        android:inputType="text"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Teléfono"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2"
+        app:layout_constraintTop_toBottomOf="@+id/Apellido"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <EditText
-        android:id="@+id/editTextText4"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/dirección"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:ems="10"
-        android:hint="Ingrese direcion"
-        android:inputType="text"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="dirección"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3"
+        app:layout_constraintTop_toBottomOf="@+id/Teléfono"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <EditText
-        android:id="@+id/editTextText5"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/Correo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:ems="10"
-        android:hint="correo electonico "
-        android:inputType="text"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Correo electrónico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4"
+        app:layout_constraintTop_toBottomOf="@+id/dirección"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <EditText
-        android:id="@+id/editTextTextPassword"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/Contraseña"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:ems="10"
-        android:hint="contraseña"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Contraseña"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText5"
+        app:layout_constraintTop_toBottomOf="@+id/Correo"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="0dp"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnActualizar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="100dp"
+        android:layout_marginTop="24dp"
         android:text="Actualizar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/Contraseña" />
 </androidx.constraintlayout.widget.ConstraintLayout>

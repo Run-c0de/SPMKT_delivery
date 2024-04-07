@@ -111,7 +111,7 @@
                     android:textAppearance="?android:textAppearanceMedium" />
 
                 <TextView
-                    android:id="@+id/text_total_pagar"
+                    android:id="@+id/Total"
                     android:layout_width="81dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"

@@ -85,6 +85,12 @@
             android:name=".PantallaProductos"
             android:exported="true"></activity>
         <activity
+            android:name=".Direcciones"
+            android:exported="true"></activity>
+        <activity
+            android:name=".Userlogin"
+            android:exported="true"></activity>
+        <activity
             android:name=".DetallePedidoActivity"
             android:exported="false"></activity>
         <activity

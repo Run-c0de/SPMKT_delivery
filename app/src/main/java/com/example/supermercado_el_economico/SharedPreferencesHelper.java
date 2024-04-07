@@ -14,7 +14,7 @@ public class SharedPreferencesHelper {
     private static final String SHARED_PREFS_NAME = "PRODUCTOS_SHARED_PREFS";
     private static final String KEY_PRODUCTOS = "PRODUCTOS_LIST";
 
-    // Método para guardar la lista de productos seleccionados en SharedPreferences
+
     public static void saveProductos(Context context, List<Producto> productos) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -24,7 +24,7 @@ public class SharedPreferencesHelper {
         editor.apply();
     }
 
-    // Método para cargar la lista de productos seleccionados desde SharedPreferences
+
     public static List<Producto> loadProductos(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
         String productosJson = sharedPreferences.getString(KEY_PRODUCTOS, null);
@@ -36,7 +36,7 @@ public class SharedPreferencesHelper {
         return new ArrayList<>();
     }
 
-    // Método para borrar los registros de SharedPreferences
+
     public static void clearSharedPreferences(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

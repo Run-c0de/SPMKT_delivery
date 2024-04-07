@@ -4,4 +4,9 @@
         <item name="cornerSize">8dp</item>
     </style>
 
+    <style name="MyShapeAppearanceOverlay.Circle" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
+
 </resources>

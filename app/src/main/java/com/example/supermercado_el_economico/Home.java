@@ -35,7 +35,7 @@ import java.net.URL;
 public class Home extends AppCompatActivity {
 
     private LinearLayout layout;
-    Button BtnCarrito;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +43,15 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         layout = findViewById(R.id.layout);
-        Button BtnCarrito = findViewById(R.id.BtnCarrito);
+        ImageButton btnuser = findViewById(R.id.btnuser);
+
         new FetchCategoriesTask().execute("https://delivery-service.azurewebsites.net/api/Categorias");
 
-        BtnCarrito.setOnClickListener(new View.OnClickListener() {
+
+        btnuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home.this, CarritoActivity.class);
+                Intent intent = new Intent(Home.this, Userlogin.class);
                 startActivity(intent);
             }
         });
@@ -159,4 +161,6 @@ public class Home extends AppCompatActivity {
             }
         });
     }
+
+
 }
