@@ -1,19 +1,15 @@
 package com.example.supermercado_el_economico;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -48,37 +44,29 @@ import java.net.URL;
 public class Home extends AppCompatActivity {
 
     private LinearLayout layout;
-<<<<<<< Updated upstream
-
-
-=======
-    Button BtnCarrito, btnperfil;
     private SessionManager session;
     private RequestQueue requestQueue;
->>>>>>> Stashed changes
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
         layout = findViewById(R.id.layout);
-<<<<<<< Updated upstream
         ImageButton btnuser = findViewById(R.id.btnuser);
-=======
-        Button BtnCarrito = findViewById(R.id.BtnCarrito);
->>>>>>> Stashed changes
-
         new FetchCategoriesTask().execute("https://delivery-service.azurewebsites.net/api/Categorias");
-
 
         btnuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home.this, Userlogin.class);
+                Intent intent = new Intent(Home.this,  Userlogin.class);
                 startActivity(intent);
             }
         });
+
     }
+
+
 
     private class FetchCategoriesTask extends AsyncTask<String, Void, String> {
 
@@ -173,11 +161,11 @@ public class Home extends AppCompatActivity {
                                 .show();
                     }
                 });
-            request.setRetryPolicy(new DefaultRetryPolicy(
+        request.setRetryPolicy(new DefaultRetryPolicy(
                 0,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            requestQueue.add(request);
+        requestQueue.add(request);
     }
     private void createImageButton(String imageUrl, String description, int categoryId) {
 
@@ -237,6 +225,4 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-
-
 }
