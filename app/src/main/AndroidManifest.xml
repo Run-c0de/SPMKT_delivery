@@ -19,7 +19,6 @@
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
     <queries>
 
         <!-- Browser -->
@@ -46,36 +45,33 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Supermercado_el_Economico"
-        tools:targetApi="31"
-        android:networkSecurityConfig="@xml/network_security_config">
-
-
+        tools:targetApi="31">
+        <activity
+            android:name=".AddressLocation"
+            android:exported="false" />
         <!-- MainActivity como actividad principal -->
         <activity
             android:name=".Login.MainActivity"
-            android:exported="false">
-
-
-        </activity> <!-- Otras actividades -->
+            android:exported="false"></activity> <!-- Otras actividades -->
         <activity
             android:name=".registro_user"
             android:exported="false" />
         <activity
             android:name=".registro_token"
             android:exported="false" />
-
         <activity
             android:name=".Login.Pantalla_Inicio"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Login.Pantalla_Nueva_Password"
             android:exported="false" />
@@ -88,22 +84,21 @@
         <activity
             android:name=".ActualizarPerfil"
             android:exported="false" />
-
         <activity
             android:name=".PantallaProductos"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".Direcciones"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".Userlogin"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".DetallePedidoActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".HistorialPedidoActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".CarritoActivity"
             android:exported="false" /> <!-- actividades faltantes -->
@@ -122,20 +117,13 @@
         <activity
             android:name=".Shop.CustomerAddress"
             android:exported="false" />
-
         <activity
             android:name=".Shop.MapView"
-            android:exported="false">
-
-        </activity>
-
+            android:exported="false"></activity>
         <activity
             android:name=".UserProfileActivity"
             android:exported="false"
-            android:label="@string/app_name">
-
-        </activity>
-
+            android:label="@string/app_name"></activity>
         <activity
             android:name=".PerformanceProfileActivity"
             android:label="@string/app_name" />
@@ -153,7 +141,6 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/api_key" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
