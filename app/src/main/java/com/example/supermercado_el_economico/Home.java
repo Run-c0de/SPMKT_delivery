@@ -94,14 +94,17 @@ public class Home extends AppCompatActivity {
                     if(itemId == R.id.page_1){
                         Intent intent = new Intent(getApplicationContext(), Home.class);
                         startActivity(intent);
+                        finish();
                     }
                     else if(itemId == R.id.page_2){
                         Intent intent = new Intent(getApplicationContext(), HistorialPedidoActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                     else if(itemId == R.id.page_3){
                         Intent intent = new Intent(getApplicationContext(), CustomerAddress.class);
                         startActivity(intent);
+                        finish();
                     }
                     return true;
                 }

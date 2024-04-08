@@ -4,19 +4,25 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.supermercado_el_economico.Adapters.ProductosAdapter;
 import com.example.supermercado_el_economico.Delivery.HomeRepartidor;
 import com.example.supermercado_el_economico.Delivery.PerfilRepartidor;
+import com.example.supermercado_el_economico.Shop.CustomerAddress;
 import com.example.supermercado_el_economico.models.Producto;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,11 +59,13 @@ public class PantallaProductos extends AppCompatActivity {
             new ObtenerDatosJsonTask().execute(apiUrl);
         }
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
+
         btnatras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PantallaProductos.this, Home.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -65,12 +73,26 @@ public class PantallaProductos extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-
                 Intent intent = new Intent(PantallaProductos.this, CarritoActivity.class);
                 startActivity(intent);
             }
         });
+
+        MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
+
+        topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.action_profile_photo) {
+                    Intent intent = new Intent(PantallaProductos.this, Userlogin.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
 
@@ -165,4 +187,26 @@ public class PantallaProductos extends AppCompatActivity {
 
         return listaProductos;
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    int itemId = item.getItemId();
+                    if(itemId == R.id.page_1){
+                        finish();
+                    }
+                    else if(itemId == R.id.page_2){
+                        Intent intent = new Intent(getApplicationContext(), HistorialPedidoActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if(itemId == R.id.page_3){
+                        Intent intent = new Intent(getApplicationContext(), CustomerAddress.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    return true;
+                }
+            };
 }

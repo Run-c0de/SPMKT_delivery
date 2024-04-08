@@ -2,18 +2,21 @@ package com.example.supermercado_el_economico;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.supermercado_el_economico.Adapters.ProductosSeleccionadosAdapter;
 import com.example.supermercado_el_economico.Login.SessionManager;
 import com.example.supermercado_el_economico.models.Producto;
+import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,16 +62,27 @@ public class CarritoActivity extends AppCompatActivity {
             }
         });
 
+        MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
 
-        // Cargar la lista de productos seleccionados desde SharedPreferences
+        topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.action_profile_photo) {
+                    Intent intent = new Intent(CarritoActivity.this, Userlogin.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
         List<Producto> productosSeleccionados = SharedPreferencesHelper.loadProductos(this);
 
-        // Verificar si la lista está vacía
         if (productosSeleccionados.isEmpty()) {
-            // La lista está vacía, mostrar un mensaje
             Toast.makeText(this, "El carrito está vacío", Toast.LENGTH_SHORT).show();
         } else {
-            // La lista no está vacía, configurar la vista para mostrar los productos seleccionados
             RecyclerView recyclerView = findViewById(R.id.recyclerViewProductosSeleccionados);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             ProductosSeleccionadosAdapter adapter = new ProductosSeleccionadosAdapter(productosSeleccionados);

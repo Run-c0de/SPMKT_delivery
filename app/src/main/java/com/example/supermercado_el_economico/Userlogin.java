@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.supermercado_el_economico.Login.Pantalla_Inicio;
 import com.example.supermercado_el_economico.Login.SessionManager;
 
 import org.json.JSONException;
@@ -38,7 +39,7 @@ public class Userlogin extends AppCompatActivity {
 
     private SessionManager session;
 
-    private  Button btnRegresar;
+    private  Button btnRegresar,btnCerrarSesion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class Userlogin extends AppCompatActivity {
         imageViewFoto = findViewById(R.id.imageViewFoto);
         Button btnVerDireccion = findViewById(R.id.btnVerDireccion);
         btnRegresar = findViewById(R.id.btnRegresar);
+        btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
 
         btnVerDireccion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,10 +69,21 @@ public class Userlogin extends AppCompatActivity {
         btnRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Userlogin.this, Home.class);
-                startActivity(intent);
+                finish();
             }
         });
+        btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                session.logout();
+                Toast.makeText(Userlogin.this, "¡Te esperamos pronto!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Userlogin.this, Pantalla_Inicio.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
 
         session = new SessionManager(getApplicationContext());
 
