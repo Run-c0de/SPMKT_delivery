@@ -30,7 +30,7 @@ public class Direcciones extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_direccionusuario);
+        setContentView(R.layout.activity_direccion_usuario);
 
         // Encuentra los TextView en el diseño
         //textViewUserId = findViewById(R.id.textViewUserId);

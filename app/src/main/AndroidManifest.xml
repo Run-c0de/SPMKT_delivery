@@ -6,22 +6,27 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-
-
-
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
     <queries>
 
         <!-- Browser -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
-
             <data android:scheme="http" />
         </intent>
 
@@ -47,28 +52,37 @@
         android:theme="@style/Theme.Supermercado_el_Economico"
         tools:targetApi="31"
         android:networkSecurityConfig="@xml/network_security_config">
-        <activity
-            android:name=".Login.Pantalla_Login"
-            android:exported="false" />
+
         <!-- MainActivity como actividad principal -->
         <activity
             android:name=".Login.MainActivity"
-            android:exported="false"></activity> <!-- Otras actividades -->
-        <activity
-            android:name=".registro_user"
-            android:exported="false" />
-        <activity
-            android:name=".registro_token"
-            android:exported="false" />
-        <activity
-            android:name=".Login.Pantalla_Inicio"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity> <!-- Otras actividades -->
+        <activity
+            android:name=".registro_user"
+            android:exported="false" />
+
+        <activity
+            android:name=".registro_token"
+            android:exported="false" />
+
+        <activity
+            android:name=".Login.Pantalla_Inicio"
+            android:exported="false">
+
         </activity>
+
+        <activity
+            android:name=".Shop.MapView"
+            android:exported="false">
+
+        </activity>
+
         <activity
             android:name=".Login.Pantalla_Nueva_Password"
             android:exported="false" />
@@ -84,7 +98,7 @@
 
         <activity
             android:name=".PantallaProductos"
-            android:exported="true"></activity>
+            android:exported="false" />
         <activity
             android:name=".Direcciones"
             android:exported="true"></activity>
@@ -93,16 +107,16 @@
             android:exported="true"></activity>
         <activity
             android:name=".DetallePedidoActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".HistorialPedidoActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".CarritoActivity"
             android:exported="false" /> <!-- actividades faltantes -->
         <activity
             android:name=".Home"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".MasVendidos"
             android:exported="false" />
@@ -115,9 +129,6 @@
         <activity
             android:name=".Shop.CustomerAddress"
             android:exported="false" />
-        <activity
-            android:name=".Shop.MapView"
-            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -128,6 +139,14 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="@string/api_key" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

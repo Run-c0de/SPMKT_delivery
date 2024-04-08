@@ -48,4 +48,5 @@
         app:itemTextAppearanceInactive="?android:attr/textAppearanceMedium"
         app:itemTextColor="#0A0000"
         app:menu="@menu/bottom_navigation_menu" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

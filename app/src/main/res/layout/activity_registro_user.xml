@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/textView"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:textSize="25dp" />
 
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="91dp"
@@ -237,12 +237,12 @@
             app:startIconDrawable="@drawable/lock_ico"
             android:hint="Confirmar Contraseña "
             app:boxBackgroundMode="outline">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtConfirmarPass"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:inputType="text"
-            android:textColor="@color/black" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtConfirmarPass"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:inputType="text"
+                android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
