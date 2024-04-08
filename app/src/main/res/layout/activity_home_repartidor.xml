@@ -7,62 +7,43 @@
 
     tools:context=".Delivery.HomeRepartidor">
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="410dp"
-        android:layout_height="130dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.024"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.001"
-        app:srcCompat="@drawable/logo_oficial" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Repartidor"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.237" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/Pedido"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:backgroundTint="#F17A0A"
-        android:text="Pedido"
-        app:cornerRadius="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.412"
-        app:strokeWidth="2dp" />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_buy_ads"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Entregar" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/Ubicacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:backgroundTint="#F17A0A"
-        android:text="Ubicacion"
-        app:cornerRadius="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.54"
-        app:strokeWidth="2dp" />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_sell_ads"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Proceso" />
 
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Entregado" />
+
+
+        </com.google.android.material.tabs.TabLayout>
+
+
+        <FrameLayout
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/tab_layout" />
+
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,8 @@
 package com.example.supermercado_el_economico.Shop;
 
 public class LocationData {
-
+    private String txtLatitud;
+    private String txtLongitud;
     private double newLatitude = 0.0;
     public double getLat(){
         return newLatitude;
@@ -20,10 +21,5 @@ public class LocationData {
         newLongitude = lon;
         _referente = referente;
     }
-
-
-
-    private String txtLatitud;
-    private String txtLongitud;
 
 }

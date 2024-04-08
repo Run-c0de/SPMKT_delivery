@@ -1,16 +1,20 @@
 package com.example.supermercado_el_economico.Shop;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.supermercado_el_economico.Adapters.DireccionAdapter;
 import com.example.supermercado_el_economico.ApiRest.RestApiMethods;
+import com.example.supermercado_el_economico.BaseActivity;
 import com.example.supermercado_el_economico.Login.SessionManager;
 import com.example.supermercado_el_economico.R;
 import com.example.supermercado_el_economico.models.DireccionModel;
@@ -29,7 +33,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class CustomerAddress extends AppCompatActivity {
+public class CustomerAddress extends BaseActivity {
     private SessionManager session;
     String userId;
     RecyclerView recyclerView;
@@ -37,7 +41,13 @@ public class CustomerAddress extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_direcciones);
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View contentView = inflater.inflate(R.layout.activity_direcciones, null, false);
+        drawer.addView(contentView, 0);
+
+        bottomNavigationView.getMenu().findItem(R.id.about).setChecked(true);
+
         recyclerView = findViewById(R.id.recyclerDirecciones);
         btnRegistrar = findViewById(R.id.btnRegistrar);
         // Inicializa el SessionManager
@@ -98,14 +108,30 @@ public class CustomerAddress extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            //textViewAddress.setText(formattedResponse);
-                        }
+                    runOnUiThread(() -> {
+                        //textViewAddress.setText(formattedResponse);
                     });
                 }
             }
         });
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_second, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_menu_second) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
+//author update:ariel.reyes.flores@gmail.com
+//github:irrefl,Run_c0de

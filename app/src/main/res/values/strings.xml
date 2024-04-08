@@ -8,6 +8,11 @@
     <string name="buttonAddToCart">Add to Cart</string>
     <string name="nombre">Nombre</string>
     <string name="btnatras"><![CDATA[<- Atras]]></string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="textViewIVS">IVS</string>
     <string name="api_key">AIzaSyBKChiJ2RngXt_KN1qvYcpgNWdxxv3Fgbc</string>
+
 </resources>

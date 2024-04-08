@@ -6,4 +6,12 @@
     <color name="green">#49eb94</color>
     <color name="red">#FF0000</color>
     <color name="blue">#348feb</color>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+
+
+    <color name="colorAccent">#FF4081</color>
+    <color name="orange">#ff6147</color>
+    <color name="lowerOrange">#ff7760</color>
 </resources>

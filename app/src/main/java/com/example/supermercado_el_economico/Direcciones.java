@@ -1,7 +1,5 @@
 package com.example.supermercado_el_economico;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 
-public class Direcciones extends AppCompatActivity {
+public class Direcciones extends BaseActivity {
 
     private TextView textViewUserId;
     private TextView textViewUsername;
@@ -113,4 +111,5 @@ public class Direcciones extends AppCompatActivity {
             return "Error parsing JSON";
         }
     }
+    //author changes:ariel.reyes.flores@gmail.com
 }

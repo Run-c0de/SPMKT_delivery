@@ -1,5 +1,4 @@
 package com.example.supermercado_el_economico.Shop;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -9,17 +8,19 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.supermercado_el_economico.BaseActivity;
 import com.example.supermercado_el_economico.R;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -30,11 +31,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MapView extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener  {
+public class MapView extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener  {
 
     private final int FINE_PERMISSION_CODE = 1;
     private GoogleMap myMap;
@@ -43,11 +45,21 @@ public class MapView extends AppCompatActivity implements OnMapReadyCallback, Go
     Location currentLocation;
     MaterialButton saveButton;
     TextInputEditText addressInput;
+    private String txtLatitud;
+    private String txtLongitud;
+    private LocationListener locationListener;
+    private LocationManager locationManager;
+    private LatLng currentLatLng;
+    private Marker currentMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_view);
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View contentView = inflater.inflate(R.layout.activity_map_view, null, false);
+        drawer.addView(contentView, 0);
+
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -73,9 +85,12 @@ public class MapView extends AppCompatActivity implements OnMapReadyCallback, Go
             String reference = String.valueOf(addressInput.getText());
             boolean isNewCorsEmpty = newLatitude == 0.0 && newLongitude == 0.0;
             LocationData locationData  = (isNewCorsEmpty) ?
-                        new LocationData(latitude, longitude, reference) : new LocationData(newLatitude, newLongitude, reference);
+                    new LocationData(latitude, longitude, reference) : new LocationData(newLatitude, newLongitude, reference);
 
         });
+
+
+        bottomNavigationView.getMenu().findItem(R.id.dashboard).setChecked(true);
 
     }
 
@@ -90,21 +105,15 @@ public class MapView extends AppCompatActivity implements OnMapReadyCallback, Go
         }
     }
 
-    private String txtLatitud;
-    private String txtLongitud;
-    private LocationListener locationListener;
-    private LocationManager locationManager;
-    private LatLng currentLatLng;
-    private Marker currentMarker;
     private void getLocation() {
-         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-         locationListener = new LocationListener() {
+        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
                 txtLatitud = String.valueOf(location.getLatitude());
                 txtLongitud = String.valueOf(location.getLongitude());
-                latitude = Float.valueOf(txtLatitud);
-                longitude = Float.valueOf(txtLongitud);
+                latitude = Float.parseFloat(txtLatitud);
+                longitude = Float.parseFloat(txtLongitud);
                 setLocation(location);
 
                 if(markerPositionChanged){
@@ -130,10 +139,10 @@ public class MapView extends AppCompatActivity implements OnMapReadyCallback, Go
 
         };
 
-         boolean wereGpsPermissionGranted = ActivityCompat.checkSelfPermission(MapView.this,
-                                            Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                                            ActivityCompat.checkSelfPermission(MapView.this,
-                                                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+        boolean wereGpsPermissionGranted = ActivityCompat.checkSelfPermission(MapView.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(MapView.this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
         if (wereGpsPermissionGranted) {
             ActivityCompat.requestPermissions(MapView.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1000);
         }
@@ -196,4 +205,24 @@ public class MapView extends AppCompatActivity implements OnMapReadyCallback, Go
     public void onMarkerDragStart(@NonNull Marker marker) {
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_second, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.action_menu_second) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+//author: ariel.reyes.flores@gmail.com
 }
