@@ -1,10 +1,11 @@
 package com.example.supermercado_el_economico.Domain.Pedidos;
 
+import com.example.supermercado_el_economico.Domain.Clientes.Cliente;
+import com.example.supermercado_el_economico.Domain.Repartidores.Repartidor;
+import com.example.supermercado_el_economico.Domain.ValueObjects.Direccion;
 import com.google.gson.annotations.SerializedName;
 
-import Domain.Clientes.Cliente;
-import Domain.Repartidores.Repartidor;
-import Domain.ValueObjects.Direccion;
+
 
 
 public class Pedido {

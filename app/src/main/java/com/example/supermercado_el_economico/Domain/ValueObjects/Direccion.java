@@ -1,8 +1,9 @@
 package com.example.supermercado_el_economico.Domain.ValueObjects;
 
+import com.example.supermercado_el_economico.Domain.Usuarios.Usuario;
 import com.google.gson.annotations.SerializedName;
 
-import Domain.Usuarios.Usuario;
+
 
 public class Direccion {
     // Propiedades
