@@ -119,6 +119,7 @@ public class registro_user extends AppCompatActivity {
         btnSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 validarDatos();
             }
         });
