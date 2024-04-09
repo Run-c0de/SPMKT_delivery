@@ -35,7 +35,10 @@
             android:backgroundTint="#009688"
             android:text="Registrar" />
 
+
+
     </FrameLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerDirecciones"

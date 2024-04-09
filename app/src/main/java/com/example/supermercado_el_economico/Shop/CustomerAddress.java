@@ -58,9 +58,10 @@ public class CustomerAddress extends BaseActivity {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),
+                Intent intent = new Intent(CustomerAddress.this,
                         MapView.class);
                 startActivity(intent);
+
             }
         });
 
