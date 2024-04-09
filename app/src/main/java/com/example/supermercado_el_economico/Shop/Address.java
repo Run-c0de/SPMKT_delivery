@@ -4,16 +4,19 @@ public class Address {
     private int usuarioId;
     private String nombre;
     private String referencia;
-    private double latitud;
-    private double longitud;
+    private String latitud;
+    private String longitud;
 
     // Constructor
-    public Address (int usuarioId, String nombre, String referencia, double latitud, double longitud) {
+    public Address (int usuarioId, String nombre, String referencia, String latitud, String longitud) {
         this.usuarioId = usuarioId;
         this.nombre = nombre;
         this.referencia = referencia;
         this.latitud = latitud;
         this.longitud = longitud;
+    }
+    public Address(){
+
     }
 
     // Getters y Setters
@@ -40,19 +43,19 @@ public class Address {
         this.referencia = referencia;
     }
 
-    public double getLatitud() {
+    public String getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(double latitud) {
+    public void setLatitud(String latitud) {
         this.latitud = latitud;
     }
 
-    public double getLongitud() {
+    public String getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(double longitud) {
+    public void setLongitud(String longitud) {
         this.longitud = longitud;
     }
 }
