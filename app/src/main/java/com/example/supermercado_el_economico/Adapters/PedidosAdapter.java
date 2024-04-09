@@ -7,19 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bottomnavigationdemo.AddressLocation;
-import com.example.bottomnavigationdemo.Helpers.FragmentReplacer;
-import com.example.bottomnavigationdemo.R;
+
+import com.example.supermercado_el_economico.AddressLocation;
+import com.example.supermercado_el_economico.Domain.Pedidos.Pedido;
+import com.example.supermercado_el_economico.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 
-import Domain.Pedidos.Pedido;
 
 public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosViewHolder> {
 
@@ -46,6 +48,16 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
         return pedidos.size();
     }
 
+
+
+    public static void replaceFragmentWithBack(Fragment fragment, FragmentManager context) {
+        FragmentManager fragmentManager = context;
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.view_pager, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull PedidosViewHolder holder, int position) {
        Pedido pedido = pedidos.get(position);
@@ -62,13 +74,11 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
         holder.direccionTextView.setText(direccionText);
 
         // Set button click listeners (optional)
-        holder.lookUpLocation.setOnClickListener(v -> {
-                FragmentReplacer.replaceFragmentWithBack( new AddressLocation(_fragmentManager), _fragmentManager);
+        holder.completeOrder.setOnClickListener(v -> {
+                replaceFragmentWithBack( new AddressLocation(_fragmentManager), _fragmentManager);
         });
 
-        holder.completeOrder.setOnClickListener(v -> {
-            // Handle "Completar" button click for the specific pedido
-        });
+
     }
 
     public  class PedidosViewHolder extends RecyclerView.ViewHolder {
@@ -77,7 +87,7 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
         MaterialTextView clienteTextView;
         MaterialTextView telefonoTextView;
         MaterialTextView direccionTextView;
-        MaterialButton lookUpLocation, completeOrder;
+        MaterialButton  completeOrder;
 
         public PedidosViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,7 +96,7 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
             clienteTextView = itemView.findViewById(R.id.tvCliente1);
             telefonoTextView = itemView.findViewById(R.id.tvTelefono1);
             direccionTextView = itemView.findViewById(R.id.tvDireccion1);
-            lookUpLocation = itemView.findViewById(R.id.lookUpLocation);
+
             completeOrder = itemView.findViewById(R.id.completeOrder);
 
         }

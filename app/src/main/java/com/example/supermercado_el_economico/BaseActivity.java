@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.supermercado_el_economico.Delivery.HomeRepartidor;
 import com.example.supermercado_el_economico.Shop.CustomerAddress;
 import com.example.supermercado_el_economico.Shop.MapView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -51,7 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity
             }
 
             if (id == R.id.about) {
-                startActivity(new Intent(getApplicationContext(), CustomerAddress.class));
+                startActivity(new Intent(getApplicationContext(), HomeRepartidor.class));
                 overridePendingTransition(0, 0);
             }
 
